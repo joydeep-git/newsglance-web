@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,9 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthPageTypes } from "@/types/authTypes";
 import { LoginFormSchema } from "@/schema/authSchema";
-import utilityService from "@/services/utilityService";
 import { setLoginState } from "@/redux/slices/uiSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { useSendOtp } from "@/hooks/utilityHooks";
 import { useLogin } from "@/hooks/authHooks";
 import { Loader } from "lucide-react";
@@ -161,7 +159,7 @@ const LoginForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void 
                 name="otp"
                 type="text"
                 value={formik.values.otp}
-                onChange={(val) => formik.setFieldValue("otp", val)} >
+                onChange={(val) => formik.setFieldValue("otp", val.toUpperCase())} >
 
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
@@ -231,7 +229,7 @@ const LoginForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void 
 
 
           {/* google */}
-          <GoogleAuthButton title="Login with Google" />
+          <GoogleAuthButton />
 
           <div className="text-center text-sm">
             Don’t have an account?{" "}

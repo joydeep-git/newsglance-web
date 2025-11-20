@@ -204,7 +204,7 @@ const SignupForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void
                 name="otp"
                 type="text"
                 value={formik.values.otp}
-                onChange={(val) => formik.setFieldValue("otp", val)} >
+                onChange={(val) => formik.setFieldValue("otp", val.toUpperCase())} >
 
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
