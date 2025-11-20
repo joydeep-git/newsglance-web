@@ -162,3 +162,9 @@
   scrollbar-width: none;
   /* Firefox */
 }
+
+
+/* Smooth height animation using Radix variable */
+.collapsible-content {
+  transition: height 500ms ease-in-out;
+}
