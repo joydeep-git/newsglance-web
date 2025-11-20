@@ -18,13 +18,16 @@ const AuthPopup = () => {
 
   const { showLogin } = useAppSelector(state => state.ui);
   const { isAuth, user: userData } = useAppSelector(state => state.auth);
-
-  // check if user is auth
-  if (isAuth || userData) {
-    dispatch(setLoginState(false));
-  }
-
   const [currentPage, setCurrentPage] = useState<AuthPageTypes>("login");
+
+
+  // checking and redirecting to router
+  useEffect(() => {
+    if (isAuth && userData) {
+      dispatch(setLoginState(false));
+    }
+  }, [isAuth, dispatch, userData ]);
+
 
   const pages = {
     "login": <LoginForm changeState={(val) => setCurrentPage(val)} />,
