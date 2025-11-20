@@ -1,3 +1,5 @@
+import { LinkProps } from "next/link";
+import { PropsWithChildren } from "react";
 
 
 export type AuthPageTypes = "login" | "signup" | "forget";
@@ -43,9 +45,27 @@ export type LoginBodyType = {
   otp: string;
 }
 
+export type ResetPassBodyType = {
+  email: string;
+  otp: string;
+}
+
 export type GoogleAuthResponseType = {
   clientId: string;
   client_id: string;
   credential: string;
   select_by: string;
 }
+
+
+export type MenuRowProps = {
+  icon: React.ReactNode;
+  label: string;
+  onClick?: () => void;
+  chevron?: boolean;
+  isOpen?: boolean;
+  className?: string;
+};
+
+
+export type GuardLinkProps = LinkProps & PropsWithChildren & { className?: string };
