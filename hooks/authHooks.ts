@@ -1,5 +1,5 @@
 import authService from "@/services/authService";
-import { LoginBodyType, RegisterBodyType } from "@/types/authTypes";
+import { LoginBodyType, RegisterBodyType, ResetPassBodyType } from "@/types/authTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 
@@ -15,6 +15,15 @@ export const useSignOut = () => useQuery({
   queryKey: ["signOut!"],
   queryFn: () => authService.signOut(),
   enabled: false,
+})
+
+
+export const useForgetPasswordVerify = () => useMutation({
+  mutationFn: (val: ResetPassBodyType) => authService.verifyForgetPassword(val),
+})
+
+export const useResetPassword = () => useMutation({
+  mutationFn: (val: LoginBodyType) => authService.resetForgetPassword(val)
 })
 
 

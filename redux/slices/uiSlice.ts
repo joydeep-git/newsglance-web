@@ -25,7 +25,7 @@ const uiSlice = createSlice({
 
     setSearchModal: (state, action: PayloadAction<boolean>) => {
       state.showSearchBar = action.payload;
-    }
+    },
   }
 })
 
