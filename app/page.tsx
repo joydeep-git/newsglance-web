@@ -1,21 +1,16 @@
 'use client';
 
+import GuardLink from "@/components/auth-components/guardLink";
 import MaxWidthWrapper from "@/components/maxWidthWrapper";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 const HomeComponent = () => {
 
 
   return (
     <MaxWidthWrapper>
-      <div>
-        
-      </div>
 
-      <div>
-        <Link href="/profile">profile</Link>
-      </div>
+      <GuardLink href="/profile">profile</GuardLink>
+
     </MaxWidthWrapper>
   );
 };
