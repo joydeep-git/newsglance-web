@@ -2,15 +2,15 @@
 
 import { UserDataType } from "@/types/authTypes";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { ArrowUpCircle, Bookmark, Bug, CreditCard, Crown, FileText, HelpCircle, History, LogOut, Mail, Settings, Sparkles, User } from "lucide-react";
+import { Bug, ChevronDown, ChevronUp, CreditCard, Crown, FileText, HelpCircle, LogOut, Mail, ReceiptIndianRupee, Settings, User } from "lucide-react";
 import MenuRow from "./menuRow";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { useSignOut } from "@/hooks/authHooks";
 import { useAppDispatch } from "@/redux/store";
 import { setLogout } from "@/redux/slices/authSlice";
+import { useState } from "react";
 
 
 const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
@@ -18,21 +18,42 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [openSection, setOpenSection] = useState<string | null>(null);
-
   const { refetch } = useSignOut();
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  // Toggle dropdowns
-  const toggleSection = (section: string) => {
-    setOpenSection((prev) => (prev === section ? null : section));
-  };
+  const menuOptions: Record<string, { url: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> }> = {
+    "Profile": {
+      url: "/profile",
+      icon: User,
+    },
+    "Settings": {
+      url: "/settings",
+      icon: Settings,
+    },
+    // "Saved News": {
+    //   url: "/saved-news",
+    //   icon: Bookmark,
+    // },
+    // "Chat": {
+    //   url: "/chat",
+    //   icon: Sparkles,
+    // },
+    "Pricing": {
+      url: "/pricing",
+      icon: ReceiptIndianRupee,
+    },
+    "Billing & Payments": {
+      url: "/billing",
+      icon: CreditCard,
+    },
+  }
 
 
   const handleSignOut = () => {
+    dispatch(setLogout());
     refetch();
     router.replace("/");
-    dispatch(setLogout());
   }
 
 
@@ -40,8 +61,8 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="cursor-pointer">
         <Avatar className="h-9 w-9 ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all">
-          <AvatarImage src={data.avatarId ?? "https://github.com/shadcn.png"} />
-          <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium">
+          <AvatarImage src={data.avatarId ?? "https://newsglance-s3.s3.ap-south-1.amazonaws.com/images/default-avatar.jpg"} />
+          <AvatarFallback className="bg-linear-to-br from-blue-500 to-purple-600 text-white font-medium">
             {data.name.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
@@ -60,7 +81,7 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
               {data.name}
             </p>
             {data.isPremium && (
-              <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full animate-pulse">
+              <div className="flex items-center gap-1 bg-linear-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full animate-pulse">
                 <Crown className="h-3 w-3" />
                 <span>Gold</span>
               </div>
@@ -72,86 +93,29 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
         <div className="border-t" />
 
         <div className="py-1">
-          {/* Account */}
-          <MenuRow
-            icon={<User className="h-4 w-4" />}
-            label="Profile"
-            onClick={() => router.push("/profile")}
-          />
 
-          <MenuRow
-            icon={<Settings className="h-4 w-4" />}
-            label="Settings"
-            onClick={() => router.push("/settings")}
-          />
 
-          <MenuRow
-            icon={<Bookmark className="h-4 w-4" />}
-            label="Saved Articles"
-            onClick={() => router.push("/saved")}
-          />
-
-          <MenuRow
-            icon={<Sparkles className="h-4 w-4 text-purple-600" />}
-            label="AI Insights"
-            onClick={() => router.push("/ai-chat")}
-          />
-
-          {/* Membership */}
-          <Collapsible
-            open={openSection === "membership"}
-            onOpenChange={() => toggleSection("membership")}
-          >
-            <CollapsibleTrigger className="w-full">
+          {
+            Object.entries(menuOptions).map(([label, { icon: ItemIcon, url }]) => (
               <MenuRow
-                icon={
-                  <Crown
-                    className={`h-4 w-4 ${data.isPremium ? "text-yellow-500" : "text-muted-foreground"}`}
-                  />
-                }
-                label="Membership"
-                chevron
-                isOpen={openSection === "membership"}
+                key={label}
+                icon={<ItemIcon className="h-4 w-4" />}
+                label={label}
+                onClick={() => router.push(url)}
               />
-            </CollapsibleTrigger>
+            ))
+          }
 
-            <CollapsibleContent className="pl-8 pr-4 pb-2 space-y-1.5 overflow-hidden transition-all duration-500 ease-in-out">
-
-              <MenuRow
-                icon={<CreditCard className="h-4 w-4" />}
-                label="Billing & Payments"
-                onClick={() => router.push("/billing")}
-              />
-
-              <MenuRow
-                icon={<History className="h-4 w-4" />}
-                label="Payment History"
-                onClick={() => router.push("/payments")}
-              />
-
-              {!data.isPremium && (
-                <MenuRow
-                  icon={<ArrowUpCircle className="h-4 w-4 text-green-600" />}
-                  label="Upgrade to Gold"
-                  onClick={() => router.push("/pricing")}
-                  className="text-green-600 font-medium"
-                />
-              )}
-            </CollapsibleContent>
-          </Collapsible>
 
           {/* Help & Support */}
-          <Collapsible
-            open={openSection === "support"}
-            onOpenChange={() => toggleSection("support")}
-          >
-            <CollapsibleTrigger className="w-full">
+          <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+
+            <CollapsibleTrigger className="w-full cursor-pointer flex justify-between items-center pr-4 hover:bg-accent/50" >
               <MenuRow
                 icon={<HelpCircle className="h-4 w-4" />}
                 label="Help & Support"
-                chevron
-                isOpen={openSection === "support"}
               />
+              {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </CollapsibleTrigger>
 
             <CollapsibleContent className="pl-8 pr-4 pb-2 space-y-1.5 overflow-hidden transition-all duration-500 ease-in-out">
