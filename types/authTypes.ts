@@ -62,8 +62,6 @@ export type MenuRowProps = {
   icon: React.ReactNode;
   label: string;
   onClick?: () => void;
-  chevron?: boolean;
-  isOpen?: boolean;
   className?: string;
 };
 
