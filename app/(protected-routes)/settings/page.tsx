@@ -3,9 +3,9 @@
 const Settings = () => {
 
   return (
-    <>
-      Settings
-    </>
+    <div>
+      Settings page
+    </div>
   )
 }
 
