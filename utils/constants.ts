@@ -1,5 +1,8 @@
 
 
+export const defaultAvatar = process.env.DEFAULT_AVATAR!;
+
+
 export const countryMap: Record<string, string> = {
   "AF": 'Afghanistan',
   "AX": 'Aland Islands',

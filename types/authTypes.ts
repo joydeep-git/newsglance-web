@@ -1,5 +1,6 @@
 import { LinkProps } from "next/link";
 import { PropsWithChildren } from "react";
+import { FileDataType } from "./globalTypes";
 
 
 export type AuthPageTypes = "login" | "signup" | "forget";
@@ -12,7 +13,8 @@ export type UserDataType = {
   username: string;
   email: string;
   password?: string;
-  avatarId: string | null;
+  avatarId: string;
+  avatar?: FileDataType | null | undefined;
   newsBalance: number;
   audioBalance: number;
   isPremium: boolean;
@@ -20,7 +22,6 @@ export type UserDataType = {
   defaultCountry: string | null;
   createdAt: Date;
   updatedAt: Date;
-  emailVerified?: Date | null;
 }
 
 export type OtpType = "register" | "login" | "forget-password" | "delete-account";

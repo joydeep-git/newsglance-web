@@ -17,6 +17,15 @@ export interface ISODateRangeOptions {
   direction: DateDirection;
 }
 
+export interface FileDataType {
+  id: string;
+  name: string;
+  url: string;
+  fileSize: number;
+  createdAt: Date;
+  type: "image" | "audio";
+};
+
 
 export interface MaxWidthWrapperProps {
   children: ReactNode;
