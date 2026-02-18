@@ -1,15 +1,16 @@
 "use client";
 
 
-import React, { useState } from 'react';
-import { User, Mail, Calendar, Globe, Crown, Headphones, Newspaper, Settings, CreditCard, Edit } from 'lucide-react';
+import React from 'react';
+import { User, Mail, Calendar, Globe, Crown, Headphones, Newspaper, Settings, CreditCard } from 'lucide-react';
 import dateUtility from '@/utils/dateUtility';
-import { countryMap } from '@/utils/constants';
+import { countryMap, defaultValues } from '@/utils/constants';
 import { useAppSelector } from '@/redux/store';
 import ProfileLoadingPage from '@/components/profileLoadingPage';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import ProfileAvatarDropdown from '@/components/profile-components/profileAvatarDropdown';
 
 
 
@@ -17,52 +18,48 @@ const ProfilePage = () => {
 
   const { user: userData } = useAppSelector(state => state.auth);
 
-  const [imageHover, setImageHover] = useState(false);
-
-  const handleImageChange = () => {
-    // Image change logic would go here
-    console.log("Change image clicked");
-  };
-
   const getCountryName = (code: string) => {
     return countryMap[code] || code;
   };
 
+
   return (
+
     !userData
+
       ? <ProfileLoadingPage />
+
       : <div className="w-full space-y-6">
+
         {/* Profile Header Card */}
         <div className="bg-white rounded-lg border border-slate-200">
           <div className="p-8">
-            <div className="flex flex-col sm:flex-row sm:items-start gap-6">
-              <div
-                className="relative group"
-                onMouseEnter={() => setImageHover(true)}
-                onMouseLeave={() => setImageHover(false)}
-              >
+            <div className="flex flex-col sm:flex-row sm:items-start gap-2">
+
+              <div className="relative group">
                 <Image
-                  src="https://newsglance-s3.s3.ap-south-1.amazonaws.com/images/default-avatar.jpg"
-                  width={112}
-                  height={112}
+                  src={userData.avatar?.url || defaultValues?.avatar}
+                  width={120}
+                  height={120}
                   alt={userData.name}
                   className="w-28 h-28 rounded-lg border-2 border-slate-200 object-cover bg-white"
                 />
+
                 {userData.isPremium && (
                   <div className="absolute -top-2 -right-2 bg-slate-900 p-1.5 rounded-full shadow-md">
-                    <Crown size={14} className="text-white" />
+                    <Crown size={14} className="text-yellow-400" />
                   </div>
                 )}
-                <Button
-                  onClick={handleImageChange}
-                  className={`absolute inset-0 bg-black/60 rounded-lg flex items-center justify-center transition-opacity h-full ${imageHover ? 'opacity-100' : 'opacity-0'
-                    }`}
-                >
-                  <Edit size={24} className="text-white" />
-                </Button>
+
+                <div className="absolute inset-0 flex items-start justify-end h-full" >
+                  <ProfileAvatarDropdown />
+                </div>
+
               </div>
 
-              <div className="flex-1">
+
+
+              <div className="flex-1 md:ml-2">
 
                 <h1 className="text-2xl font-semibold text-slate-900">{userData.name}</h1>
 
@@ -71,7 +68,7 @@ const ProfilePage = () => {
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-3 mt-4">
                   <Link
-                    href="/settings?tab=account"
+                    href="/settings/profile"
                     className={buttonVariants({ variant: "outline" })}
                   >
                     <Settings size={16} />
@@ -79,7 +76,7 @@ const ProfilePage = () => {
                   </Link>
 
                   <Link
-                    href="/billing"
+                    href="/settings/subscription"
                     className={buttonVariants({ variant: "outline" })}
                   >
                     <CreditCard size={16} />
@@ -119,6 +116,14 @@ const ProfilePage = () => {
                 <div className="flex items-center gap-2 text-slate-900">
                   <Calendar size={14} className="text-slate-400 shrink-0" />
                   <p className="text-sm">{dateUtility.formatDate(userData.createdAt)}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1.5">Last Updated</p>
+                <div className="flex items-center gap-2 text-slate-900">
+                  <Calendar size={14} className="text-slate-400 shrink-0" />
+                  <p className="text-sm">{dateUtility.formatDate(userData.updatedAt)}</p>
                 </div>
               </div>
             </div>
