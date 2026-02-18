@@ -53,3 +53,10 @@ export interface ApiSuccessResponse<T> extends ApiBaseResponse {
 export interface LoginSuccessResponse<T> extends ApiSuccessResponse<T> {
   token: string;
 }
+
+
+export interface UpdateUserBodyType {
+  name?: string;
+  username?: string;
+  defaultCountry?: string;
+}
