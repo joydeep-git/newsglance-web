@@ -3,14 +3,15 @@
 import { UserDataType } from "@/types/authTypes";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Bug, ChevronDown, ChevronUp, CreditCard, Crown, FileText, HelpCircle, LogOut, Mail, ReceiptIndianRupee, Settings, User } from "lucide-react";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { Bookmark, Bug, ChevronDown, ChevronUp, CreditCard, Crown, FileText, HelpCircle, LogOut, Mail, ReceiptIndianRupee, Settings, Sparkles, User } from "lucide-react";
 import MenuRow from "./menuRow";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { useSignOut } from "@/hooks/authHooks";
 import { useAppDispatch } from "@/redux/store";
 import { setLogout } from "@/redux/slices/authSlice";
 import { useState } from "react";
+import { defaultValues } from "@/utils/constants";
 
 
 const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
@@ -59,14 +60,18 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
 
   return (
     <DropdownMenu>
+
       <DropdownMenuTrigger asChild className="cursor-pointer">
+        
         <Avatar className="h-9 w-9 ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all">
-          <AvatarImage src={data.avatarId ?? "https://newsglance-s3.s3.ap-south-1.amazonaws.com/images/default-avatar.jpg"} />
-          <AvatarFallback className="bg-linear-to-br from-blue-500 to-purple-600 text-white font-medium">
-            {data.name.charAt(0).toUpperCase()}
-          </AvatarFallback>
+          
+          <AvatarImage src={data?.avatarId ? data?.avatar?.url : defaultValues.avatar } />
+
         </Avatar>
+
       </DropdownMenuTrigger>
+
+
 
       <DropdownMenuContent
         className="w-screen max-w-[320px] p-0 rounded-t-2xl shadow-xl"
@@ -76,24 +81,30 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
       >
         {/* Header */}
         <div className="px-4 pt-4 pb-2">
+
           <div className="flex items-center gap-2">
+
             <p className={`text-sm font-semibold ${data.isPremium ? "text-yellow-500" : "text-foreground"}`}>
               {data.name}
             </p>
+
             {data.isPremium && (
               <div className="flex items-center gap-1 bg-linear-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full animate-pulse">
                 <Crown className="h-3 w-3" />
                 <span>Gold</span>
               </div>
             )}
+
           </div>
+
+
           <p className="text-xs text-muted-foreground mt-0.5">{data.email}</p>
+
         </div>
 
         <div className="border-t" />
 
         <div className="py-1">
-
 
           {
             Object.entries(menuOptions).map(([label, { icon: ItemIcon, url }]) => (
@@ -122,7 +133,7 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
               <MenuRow
                 icon={<FileText className="h-4 w-4" />}
                 label="Documentation"
-                onClick={() => window.open("/docs", "_blank")}
+                onClick={() => window.open(defaultValues.frontendReadme, "_blank")}
               />
 
               <MenuRow
@@ -135,7 +146,7 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
                 icon={<Bug className="h-4 w-4" />}
                 label="Report a Bug"
                 onClick={() =>
-                  window.open("https://github.com/joydeep-git/newsglance-web/issues", "_blank")
+                  window.open(defaultValues.frontendIssues, "_blank")
                 }
               />
             </CollapsibleContent>
