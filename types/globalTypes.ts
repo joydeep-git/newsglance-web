@@ -5,17 +5,17 @@ export type DateUnit = 'days' | 'weeks' | 'months' | 'years';
 export type DateDirection = 'previous' | 'next';
 
 
-export interface DateRangeOptions {
-  unit: DateUnit;
-  count: number;
-  direction?: DateDirection;
-}
+// export interface DateRangeOptions {
+//   unit: DateUnit;
+//   count: number;
+//   direction?: DateDirection;
+// }
 
-export interface ISODateRangeOptions {
-  count: number;
-  unit: DateUnit;
-  direction: DateDirection;
-}
+// export interface ISODateRangeOptions {
+//   count: number;
+//   unit: DateUnit;
+//   direction: DateDirection;
+// }
 
 export interface FileDataType {
   id: string;
@@ -24,6 +24,7 @@ export interface FileDataType {
   fileSize: number;
   createdAt: Date;
   type: "image" | "audio";
+  isDefaultFile: boolean;
 };
 
 

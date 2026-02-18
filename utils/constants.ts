@@ -1,7 +1,9 @@
 
-
-export const defaultValues: { avatar: string } = {
-  avatar: process.env.DEFAULT_AVATAR!,
+export const defaultValues: { avatar: string; frontendGitHub: string; frontendIssues: string; frontendReadme: string; } = {
+  avatar: process.env.NEXT_PUBLIC_DEFAULT_AVATAR_URL!,
+  frontendGitHub: "https://github.com/joydeep-git/newsglance-web",
+  frontendIssues: "https://github.com/joydeep-git/newsglance-web/issues",
+  frontendReadme: "https://github.com/joydeep-git/newsglance-web#readme",
 };
 
 
