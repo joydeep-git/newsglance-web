@@ -26,6 +26,10 @@ export const useResetPassword = () => useMutation({
   mutationFn: (val: LoginBodyType) => authService.resetForgetPassword(val)
 })
 
+export const useDeleteAccount = () => useMutation({
+  mutationFn: (body: LoginBodyType) => authService.deleteAccount(body),
+})
+
 
 export const useGoogleAuth = () => useMutation({
   mutationFn: (token: string) => authService.googleLogin(token),
