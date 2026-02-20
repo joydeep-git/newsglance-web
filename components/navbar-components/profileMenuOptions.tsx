@@ -4,7 +4,7 @@ import { UserDataType } from "@/types/authTypes";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { Bookmark, Bug, ChevronDown, ChevronUp, CreditCard, Crown, FileText, HelpCircle, LogOut, Mail, ReceiptIndianRupee, Settings, Sparkles, User } from "lucide-react";
+import { Bug, ChevronDown, ChevronUp, CreditCard, Crown, FileText, HelpCircle, LogOut, Mail, ReceiptIndianRupee, Settings, Sparkles, User } from "lucide-react";
 import MenuRow from "./menuRow";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { useSignOut } from "@/hooks/authHooks";
@@ -29,7 +29,7 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
       icon: User,
     },
     "Settings": {
-      url: "/settings",
+      url: "/settings?active=profile",
       icon: Settings,
     },
     // "Saved News": {
@@ -45,7 +45,7 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
       icon: ReceiptIndianRupee,
     },
     "Billing & Payments": {
-      url: "/billing",
+      url: "/settings?active=billing",
       icon: CreditCard,
     },
   }
