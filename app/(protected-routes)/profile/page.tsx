@@ -68,7 +68,7 @@ const ProfilePage = () => {
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-3 mt-4">
                   <Link
-                    href="/settings/profile"
+                    href="/settings?active=profile"
                     className={buttonVariants({ variant: "outline" })}
                   >
                     <Settings size={16} />
@@ -76,7 +76,7 @@ const ProfilePage = () => {
                   </Link>
 
                   <Link
-                    href="/settings/subscription"
+                    href="/settings?active=subscription"
                     className={buttonVariants({ variant: "outline" })}
                   >
                     <CreditCard size={16} />

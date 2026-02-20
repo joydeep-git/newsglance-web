@@ -45,7 +45,7 @@ const PricingPage = () => {
       price: "₹ 0 / Lifetime",
       period: "",
       cta: isAuth ? "Continue with Free" : "Signup for free",
-      ctaHref: "/settings/subscription",
+      ctaHref: "/settings?active=profile",
       currentLabel: null,
       icon: Zap,
       features: [
@@ -68,7 +68,7 @@ const PricingPage = () => {
       price: "₹ 119 / month",
       period: "",
       cta: isAuth ? user?.isPremium ? "Manage Subscription" : "Upgrade to Premium" : "Signup for Premium",
-      ctaHref: "/settings/subscription",
+      ctaHref: "/settings?active=subscription",
       currentLabel: "Best value",
       icon: Crown,
       features: [
