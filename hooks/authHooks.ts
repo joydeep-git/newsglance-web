@@ -40,4 +40,5 @@ export const useVerifyToken = () => useQuery({
   queryKey: ["verify-token"],
   queryFn: () => authService.verifyToken(),
   enabled: false,
+  retry: false,
 })
