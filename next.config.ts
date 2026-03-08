@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         hostname: "newsglance-s3.s3.ap-south-1.amazonaws.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**",
+      },
     ]
   }
 };
