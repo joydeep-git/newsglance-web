@@ -67,3 +67,11 @@ export type PaymentStatusConfigType = {
   iconColor: string;
   ringColor: string;
 }
+
+
+export type PaymentMetaType = {
+  label: string;
+  icon: React.ReactNode;
+  badge: "default" | "secondary" | "destructive" | "outline";
+  color: string;
+}
