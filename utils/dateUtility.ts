@@ -1,33 +1,31 @@
 
 class DateUtility {
 
-
-  private getOrdinal(day: number): string {
-    if (day > 3 && day < 21) return "th";
-    switch (day % 10) {
-      case 1: return "st";
-      case 2: return "nd";
-      case 3: return "rd";
-      default: return "th";
-    }
-  }
-
-  
-  public formatDate(dateInput: Date | string | number): string {
-
+  public formatDateTime(dateInput: Date | string | number): string {
+    if (!dateInput) return "";
     const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return String(dateInput);
 
-    const day = date.getDate();
-    const year = date.getFullYear();
-    const month = date.toLocaleString("en-GB", { month: "long" });
-
-    const time = date.toLocaleTimeString("en-GB", {
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
-    }).toLowerCase();
+    }).format(date).replace(",", "");
+  }
 
-    return `${day}${this.getOrdinal(day)} ${month}, ${year} at ${time}`;
+  public formatDateOnly(dateInput: Date | string | number | null): string {
+    if (!dateInput) return "";
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return "";
+
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(date);
   }
 
 }
