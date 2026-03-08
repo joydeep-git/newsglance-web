@@ -5,18 +5,6 @@ export type DateUnit = 'days' | 'weeks' | 'months' | 'years';
 export type DateDirection = 'previous' | 'next';
 
 
-// export interface DateRangeOptions {
-//   unit: DateUnit;
-//   count: number;
-//   direction?: DateDirection;
-// }
-
-// export interface ISODateRangeOptions {
-//   count: number;
-//   unit: DateUnit;
-//   direction: DateDirection;
-// }
-
 export interface FileDataType {
   id: string;
   name: string;
@@ -58,5 +46,16 @@ export interface LoginSuccessResponse<T> extends ApiSuccessResponse<T> {
 export interface UpdateUserBodyType {
   name?: string;
   username?: string;
+  phoneNumber?: string;
   defaultCountry?: string;
 }
+
+
+export type CountryMapType = {
+  name: string;
+  countrycode: string;
+  currency: string;
+  flag: string;
+}
+
+

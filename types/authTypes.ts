@@ -12,6 +12,7 @@ export type UserDataType = {
   name: string;
   username: string;
   email: string;
+  phoneNumber: string;
   password?: string;
   avatarId: string;
   avatar?: FileDataType | null | undefined;
@@ -30,6 +31,8 @@ export type RegisterBodyType = {
   username: string;
   email: string;
   name: string;
+  phoneNumber: string;
+  defaultCountry: string;
   password: string;
   confirmPassword?: string;
   otp: string;
@@ -68,3 +71,16 @@ export type MenuRowProps = {
 
 
 export type GuardLinkProps = LinkProps & PropsWithChildren & { className?: string };
+
+
+export type PhoneInputWithCountryProps = {
+  value: string | undefined;
+  onChange: (value: string | undefined) => void;
+  onCountryChange?: (country: string | undefined) => void;
+  defaultCountry?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  id?: string;
+  className?: string;
+  "aria-invalid"?: boolean;
+};
