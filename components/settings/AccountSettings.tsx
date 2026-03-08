@@ -1,9 +1,10 @@
- "use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Shield, Trash2, Loader, AlertTriangle } from "lucide-react";
+import { useFormik } from "formik";
 
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { setLogout } from "@/redux/slices/authSlice";
@@ -15,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { useSendOtp } from "@/hooks/utilityHooks";
 import { useForgetPasswordVerify, useResetPassword, useDeleteAccount } from "@/hooks/authHooks";
+import { ChangePasswordSchema, DeleteAccountSchema } from "@/schema/authSchema";
 
 const AccountSettings = () => {
   const dispatch = useAppDispatch();
@@ -29,8 +31,6 @@ const AccountSettings = () => {
   const [resetStep, setResetStep] = useState<0 | 1 | 2>(0);
   const [resetOtp, setResetOtp] = useState("");
   const [resetTimer, setResetTimer] = useState(0);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   // Timer countdown for reset OTP
   useEffect(() => {
@@ -38,6 +38,36 @@ const AccountSettings = () => {
     const id = setInterval(() => setResetTimer((t) => t - 1), 1000);
     return () => clearInterval(id);
   }, [resetTimer]);
+
+  // Formik for change password (step 2)
+  const changePasswordFormik = useFormik({
+    initialValues: {
+      newPassword: "",
+      confirmNewPassword: "",
+    },
+    validationSchema: ChangePasswordSchema,
+    onSubmit: (values) => {
+      if (!user?.email) return;
+
+      resetPassword(
+        { email: user.email, password: values.newPassword, otp: resetOtp },
+        {
+          onSuccess: (data: { error: boolean; success: boolean; message?: string }) => {
+            if (!data.error && data.success) {
+              toast.success(data.message ?? "Password updated successfully");
+              setResetStep(0);
+              setResetOtp("");
+              changePasswordFormik.resetForm();
+            } else {
+              toast.error(data.message || "Failed to update password");
+            }
+          },
+          onError: (err: { message?: string }) =>
+            toast.error(err?.message || "Failed to update password"),
+        }
+      );
+    },
+  });
 
   const handleSendResetOtp = () => {
     if (!user?.email) {
@@ -84,47 +114,12 @@ const AccountSettings = () => {
     );
   };
 
-  const handleChangePassword = () => {
-    if (!user?.email) return;
-
-    if (!newPassword || newPassword.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
-
-    if (newPassword !== confirmNewPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    resetPassword(
-      { email: user.email, password: newPassword, otp: resetOtp },
-      {
-        onSuccess: (data: { error: boolean; success: boolean; message?: string }) => {
-          if (!data.error && data.success) {
-            toast.success(data.message ?? "Password updated successfully");
-            // reset local state
-            setResetStep(0);
-            setResetOtp("");
-            setNewPassword("");
-            setConfirmNewPassword("");
-          } else {
-            toast.error(data.message || "Failed to update password");
-          }
-        },
-        onError: (err: { message?: string }) =>
-          toast.error(err?.message || "Failed to update password"),
-      }
-    );
-  };
-
   // ----- Delete Account (OTP + password with stepper) -----
   const { mutate: sendDeleteOtp, isPending: isDeleteOtpLoading } = useSendOtp();
   const { mutate: deleteAccount, isPending: isDeleteLoading } = useDeleteAccount();
 
   const [deleteStep, setDeleteStep] = useState<0 | 1>(0);
   const [deleteOtp, setDeleteOtp] = useState("");
-  const [deletePassword, setDeletePassword] = useState("");
   const [deleteTimer, setDeleteTimer] = useState(0);
 
   // Timer countdown for delete OTP
@@ -133,6 +128,40 @@ const AccountSettings = () => {
     const id = setInterval(() => setDeleteTimer((t) => t - 1), 1000);
     return () => clearInterval(id);
   }, [deleteTimer]);
+
+  // Formik for delete account (step 1)
+  const deleteAccountFormik = useFormik({
+    initialValues: {
+      deletePassword: "",
+    },
+    validationSchema: DeleteAccountSchema,
+    onSubmit: (values) => {
+      if (!user?.email) return;
+
+      if (deleteOtp.length !== 6) {
+        toast.error("Enter 6-digit OTP");
+        return;
+      }
+
+      deleteAccount(
+        { email: user.email, password: values.deletePassword, otp: deleteOtp },
+        {
+          onSuccess: (data: { error: boolean; success: boolean; message?: string }) => {
+            if (!data.error && data.success) {
+              toast.success(data.message || "Account deleted successfully");
+              dispatch(setLogout());
+              router.replace("/");
+            } else {
+              toast.error(data.message || "Failed to delete account");
+            }
+          },
+          onError: (err: { message?: string }) => {
+            toast.error(err?.message || "Failed to delete account");
+          },
+        }
+      );
+    },
+  });
 
   const handleSendDeleteOtp = () => {
     if (!user?.email) {
@@ -150,38 +179,6 @@ const AccountSettings = () => {
         },
         onError: (err: { message?: string }) => {
           toast.error(err?.message || "Failed to send OTP");
-        },
-      }
-    );
-  };
-
-  const handleDeleteAccount = () => {
-    if (!user?.email) return;
-
-    if (deleteOtp.length !== 6) {
-      toast.error("Enter 6-digit OTP");
-      return;
-    }
-
-    if (!deletePassword) {
-      toast.error("Enter your password to confirm");
-      return;
-    }
-
-    deleteAccount(
-      { email: user.email, password: deletePassword, otp: deleteOtp },
-      {
-        onSuccess: (data: { error: boolean; success: boolean; message?: string }) => {
-          if (!data.error && data.success) {
-            toast.success(data.message || "Account deleted successfully");
-            dispatch(setLogout());
-            router.replace("/");
-          } else {
-            toast.error(data.message || "Failed to delete account");
-          }
-        },
-        onError: (err: { message?: string }) => {
-          toast.error(err?.message || "Failed to delete account");
         },
       }
     );
@@ -300,32 +297,35 @@ const AccountSettings = () => {
           )}
 
           {resetStep === 2 && (
-            <div className="space-y-4">
+            <form onSubmit={changePasswordFormik.handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="new-password">New password</Label>
                 <Input
                   id="new-password"
                   type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
+                  {...changePasswordFormik.getFieldProps("newPassword")}
                 />
+                {changePasswordFormik.touched.newPassword && changePasswordFormik.errors.newPassword && (
+                  <p className="text-xs text-red-500">{changePasswordFormik.errors.newPassword}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirm-new-password">Confirm password</Label>
                 <Input
                   id="confirm-new-password"
                   type="password"
-                  value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
                   placeholder="Re-enter new password"
+                  {...changePasswordFormik.getFieldProps("confirmNewPassword")}
                 />
+                {changePasswordFormik.touched.confirmNewPassword && changePasswordFormik.errors.confirmNewPassword && (
+                  <p className="text-xs text-red-500">{changePasswordFormik.errors.confirmNewPassword}</p>
+                )}
               </div>
               <div className="flex items-center gap-3">
                 <Button
-                  type="button"
-                  onClick={handleChangePassword}
-                  disabled={isResetPasswordLoading}
+                  type="submit"
+                  disabled={isResetPasswordLoading || !changePasswordFormik.isValid}
                 >
                   {isResetPasswordLoading ? (
                     <Loader className="h-4 w-4 animate-spin" />
@@ -340,19 +340,18 @@ const AccountSettings = () => {
                   onClick={() => {
                     setResetStep(0);
                     setResetOtp("");
-                    setNewPassword("");
-                    setConfirmNewPassword("");
+                    changePasswordFormik.resetForm();
                   }}
                 >
                   Cancel
                 </Button>
               </div>
-            </div>
+            </form>
           )}
         </CardContent>
       </Card>
 
-      {/* Delete account with stepper */} 
+      {/* Delete account with stepper */}
       <Card className="max-w-xl border-destructive/40">
         <CardHeader className="flex flex-col gap-4">
           <div className="flex items-start justify-between gap-3">
@@ -367,15 +366,14 @@ const AccountSettings = () => {
             </div>
           </div>
 
-          {/* Simple stepper */} 
+          {/* Simple stepper */}
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-2">
               <div
-                className={`flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold ${
-                  deleteStep === 0
+                className={`flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold ${deleteStep === 0
                     ? "bg-destructive text-white border-destructive"
                     : "bg-destructive/10 text-destructive border-destructive/40"
-                }`}
+                  }`}
               >
                 1
               </div>
@@ -394,11 +392,10 @@ const AccountSettings = () => {
 
             <div className="flex items-center gap-2">
               <div
-                className={`flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold ${
-                  deleteStep === 1
+                className={`flex h-6 w-6 items-center justify-center rounded-full border text-[11px] font-semibold ${deleteStep === 1
                     ? "bg-destructive text-white border-destructive"
                     : "bg-slate-100 text-slate-400 border-slate-300"
-                }`}
+                  }`}
               >
                 2
               </div>
@@ -445,7 +442,7 @@ const AccountSettings = () => {
           )}
 
           {deleteStep === 1 && (
-            <div className="space-y-5">
+            <form onSubmit={deleteAccountFormik.handleSubmit} className="space-y-5">
               <div className="flex items-center justify-between gap-2">
                 <Label htmlFor="delete-otp">OTP</Label>
                 {deleteTimer > 0 ? (
@@ -483,18 +480,19 @@ const AccountSettings = () => {
                 <Input
                   id="delete-password"
                   type="password"
-                  value={deletePassword}
-                  onChange={(e) => setDeletePassword(e.target.value)}
                   placeholder="Enter your current password"
+                  {...deleteAccountFormik.getFieldProps("deletePassword")}
                 />
+                {deleteAccountFormik.touched.deletePassword && deleteAccountFormik.errors.deletePassword && (
+                  <p className="text-xs text-red-500">{deleteAccountFormik.errors.deletePassword}</p>
+                )}
               </div>
 
               <div className="flex flex-col gap-3">
                 <Button
-                  type="button"
+                  type="submit"
                   variant="destructive"
-                  onClick={handleDeleteAccount}
-                  disabled={isDeleteLoading}
+                  disabled={isDeleteLoading || deleteOtp.length !== 6}
                   className="w-fit"
                 >
                   {isDeleteLoading ? (
@@ -511,7 +509,7 @@ const AccountSettings = () => {
                   content will be removed and cannot be recovered.
                 </p>
               </div>
-            </div>
+            </form>
           )}
         </CardContent>
       </Card>

@@ -62,10 +62,10 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
     <DropdownMenu>
 
       <DropdownMenuTrigger asChild className="cursor-pointer">
-        
+
         <Avatar className="h-9 w-9 ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all">
-          
-          <AvatarImage src={data?.avatarId ? data?.avatar?.url : defaultValues.avatar } />
+
+          <AvatarImage src={data?.avatarId ? data?.avatar?.url : defaultValues.avatar} />
 
         </Avatar>
 
@@ -91,7 +91,7 @@ const ProfileMenuOptions = ({ data }: { data: UserDataType }) => {
             {data.isPremium && (
               <div className="flex items-center gap-1 bg-linear-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full animate-pulse">
                 <Crown className="h-3 w-3" />
-                <span>Gold</span>
+                <span>Plus+</span>
               </div>
             )}
 
