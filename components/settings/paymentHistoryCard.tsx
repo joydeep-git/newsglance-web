@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { load } from "@cashfreepayments/cashfree-js";
-import { toast } from "sonner";
 import { motion } from "motion/react";
-import { Crown, Zap, Newspaper, Headphones, CalendarDays, RefreshCw, Clock, CheckCircle2, XCircle, Loader2, ReceiptText, AlertCircle, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
-import { useAppSelector } from "@/redux/store";
-import { useCreatePaymentProduct, usePaymentHistory } from "@/hooks/paymentHooks";
+import { RefreshCw, ReceiptText, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { usePaymentHistory } from "@/hooks/paymentHooks";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";

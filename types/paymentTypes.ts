@@ -16,7 +16,6 @@ export type PaymentHistoryType = {
 
 
 export type CashfreeOrderType = {
-  cart_details: any | null;
   cf_order_id: string;
   created_at: string;
   customer_details: {

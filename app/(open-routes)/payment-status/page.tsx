@@ -4,7 +4,7 @@ import { useVerifyPayment } from "@/hooks/paymentHooks";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, Loader2, ReceiptText, Settings } from "lucide-react";
+import { ArrowLeft, Loader2, ReceiptText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

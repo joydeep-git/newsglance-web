@@ -263,13 +263,13 @@ export const countryMap: Map<string, CountryMapType> = new Map([
 
 
 export const newsCategories = {
-  "Business": "business",
-  "Finance": "money",
-  "Health": "lifeandstyle",
-  "Politics": "politics",
-  "Fashion": "fashion",
-  "Travel": "travel",
-  "Entertainment": "culture",
-  "Sports": "sport",
-  "Tech": "technology",
+  "India": "INDIA",   
+  "Business": "BUSINESS",
+  "Health": "HEALTH",
+  "Politics": "POLITICS",
+  "Fashion": "FASHION",
+  "Travel": "TRAVEL",
+  "Entertainment": "ENTERTAINMENT",
+  "Sports": "SPORTS",
+  "Tech": "TECHNOLOGY",
 };

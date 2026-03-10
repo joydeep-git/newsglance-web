@@ -1,18 +1,10 @@
-'use client';
-
-import GuardLink from "@/components/auth-components/guardLink";
 import MaxWidthWrapper from "@/components/maxWidthWrapper";
+import { HomepageLayout } from "@/components/news-components/homepage-layout";
 
-const HomeComponent = () => {
-
-
+export default function HomePage() {
   return (
     <MaxWidthWrapper>
-
-      <GuardLink href="/profile">profile</GuardLink>
-
+      <HomepageLayout />
     </MaxWidthWrapper>
   );
-};
-
-export default HomeComponent;
+}

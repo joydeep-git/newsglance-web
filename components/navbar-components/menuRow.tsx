@@ -3,9 +3,9 @@
 import { MenuRowProps } from "@/types/authTypes";
 
 
-const MenuRow = ({ icon, label, onClick, className = "" }: MenuRowProps) => (
+const MenuRow = ({ icon, label, onClick, className = "", isAuthRequired = false }: MenuRowProps) => (
 
-  <div onClick={onClick} className={`flex items-center justify-between px-4 h-11 cursor-pointer hover:bg-accent/50 transition-colors ${className}`}>
+  <div onClick={isAuthRequired ? onClick : undefined} className={`flex items-center justify-between px-4 h-11 cursor-pointer hover:bg-accent/50 transition-colors ${className} ${isAuthRequired && "hidden"}`}>
 
     <div className="flex items-center gap-3">
       {icon}

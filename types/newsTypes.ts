@@ -8,3 +8,17 @@ export type GuardianArticle = {
   thumbnail?: string;
   trailText?: string;
 };
+
+
+export type NewsState = {
+  topStories: GuardianArticle[];
+  latestNews: GuardianArticle[];
+  financeNews: GuardianArticle[];
+  businessNews: GuardianArticle[];
+};
+
+
+export type BusinessSectionProps = {
+  articles: GuardianArticle[];
+  isLoading: boolean;
+}
