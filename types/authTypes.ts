@@ -67,7 +67,7 @@ export type MenuRowProps = {
   label: string;
   onClick?: () => void;
   className?: string;
-  isAuthRequired: boolean;
+  isAuthRequired?: boolean;
 };
 
 
