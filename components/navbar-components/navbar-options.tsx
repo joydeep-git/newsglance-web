@@ -51,7 +51,7 @@ const NavbarOptionsInner = () => {
               <button
                 key={key}
                 onClick={() => addToUrl(key)}
-                className={`whitespace-nowrap text-xs font-medium px-2 py-0.5 rounded-full transition-colors
+                className={`whitespace-nowrap text-xs font-medium px-2 py-0.5 rounded-full cursor-pointer transition-colors
                   ${activeCategory === key
                     ? "bg-white text-project"
                     : "text-white hover:bg-white/20"
@@ -64,6 +64,7 @@ const NavbarOptionsInner = () => {
 
           {/* Mobile — show first N categories + "More" dropdown */}
           <div className="flex sm:hidden items-center gap-1.5 flex-1 overflow-hidden">
+            
             {mobileVisible.map(([key, val]) => (
               <button
                 key={key}
