@@ -59,3 +59,7 @@ export type CountryMapType = {
 }
 
 
+export type AudioPlayerType = {
+  audioTrack: FileDataType | null;
+  onClose: () => void;
+}

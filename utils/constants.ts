@@ -271,5 +271,4 @@ export const newsCategories = {
   "politics": "Politics",
   "fashion": "Fashion",
   "travel": "Travel",
-  "lifeandstyle": "Health",
 };
