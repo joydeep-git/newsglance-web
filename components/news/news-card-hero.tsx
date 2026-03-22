@@ -2,29 +2,22 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { GuardianArticle } from "@/types/newsTypes";
+import { ArticleCard } from "@/types/newsTypes";
 import { CalendarDays, ArrowUpRight } from "lucide-react";
+import dateUtlity from "@/utils/dateUtility";
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-export function NewsCardHero({ article }: { article: GuardianArticle }) {
-  const { webTitle, webUrl, webPublicationDate, sectionName, thumbnail, trailText } = article;
+export function NewsCardHero({ article }: { article: ArticleCard }) {
+  const { id, title, publishedAt, section, thumbnail, excerpt } = article;
 
   return (
     <article className="group relative">
-      <Link href={webUrl} target="_blank" rel="noopener noreferrer" className="block">
+      <Link href={`/article/${id}`} className="block">
         {/* Image */}
         <div className="relative w-full overflow-hidden rounded-xl aspect-video lg:aspect-21/9">
           {thumbnail ? (
             <Image
               src={thumbnail}
-              alt={webTitle}
+              alt={title}
               fill
               sizes="(max-width: 1024px) 100vw, 75vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -40,23 +33,23 @@ export function NewsCardHero({ article }: { article: GuardianArticle }) {
           <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
             {/* Category badge */}
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-project text-white mb-3 uppercase tracking-wider">
-              {sectionName}
+              {section}
             </span>
 
             <h1 className="text-white text-xl md:text-3xl lg:text-4xl font-bold leading-tight mb-2 md:mb-3 group-hover:text-white/90 transition-colors line-clamp-3">
-              {webTitle}
+              {title}
             </h1>
 
-            {trailText && (
+            {excerpt && (
               <p className="text-white/75 text-sm md:text-base leading-relaxed line-clamp-2 mb-3 hidden md:block">
-                {trailText}
+                {excerpt}
               </p>
             )}
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-white/60 text-xs">
                 <CalendarDays size={12} />
-                <time dateTime={webPublicationDate}>{formatDate(webPublicationDate)}</time>
+                <time dateTime={publishedAt}>{dateUtlity.formatDateOnly(publishedAt)}</time>
               </div>
               <span className="flex items-center gap-1 text-white/70 text-xs font-medium group-hover:text-white transition-colors">
                 Read more
