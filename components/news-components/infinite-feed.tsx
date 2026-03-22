@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { InfiniteFeedProps } from "@/types/newsTypes";
-import { NewsCardMedium } from "@/components/news/news-card-medium";
+import NewsCardMedium from "@/components/news/news-card-medium";
 import { NewsCardMediumSkeleton } from "@/components/news/news-card-skeleton";
 
 

@@ -1,25 +1,26 @@
 "use client";
 
-import { GuardianArticle } from "@/types/newsTypes";
-import { NewsCardCompact } from "@/components/news/news-card-compact";
+import { FinanceSidebarProps } from "@/types/newsTypes";
+import NewsCardCompact from "@/components/news/news-card-compact";
 import { NewsCardCompactSkeleton } from "@/components/news/news-card-skeleton";
-import { SectionHeader } from "@/components/news-components/section-header";
+import SectionHeader from "@/components/news-components/section-header";
 import { motion } from "motion/react";
 
-interface FinanceSidebarProps {
-  articles: GuardianArticle[];
-  isLoading: boolean;
-}
+const FinanceSidebar = ({ articles, isLoading, viewAllHref }: FinanceSidebarProps) => {
 
-export function FinanceSidebar({ articles, isLoading }: FinanceSidebarProps) {
+
   return (
     <aside className="w-full">
-      <SectionHeader title="Finance" viewAllHref="#" />
+
+      <SectionHeader title="Finance" viewAllHref={viewAllHref} />
 
       <div className="divide-y divide-border/0">
+
         {isLoading
-          ? Array.from({ length: 6 }).map((_, i) => <NewsCardCompactSkeleton key={i} />)
-          : articles.map((article, i) => (
+
+          ? Array.from({ length: 5 }).map((_, i) => <NewsCardCompactSkeleton key={i} />)
+
+          : articles.slice(0, 5).map((article, i) => (
             <motion.div
               key={article.id}
               initial={{ opacity: 0, x: 12 }}
@@ -30,6 +31,10 @@ export function FinanceSidebar({ articles, isLoading }: FinanceSidebarProps) {
             </motion.div>
           ))}
       </div>
+
     </aside>
   );
 }
+
+
+export default FinanceSidebar;
