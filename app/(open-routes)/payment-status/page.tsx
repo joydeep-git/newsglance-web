@@ -14,13 +14,14 @@ import StatusView from "./status-view";
 import { containerVariants } from "./config-animation";
 import { useAppDispatch } from "@/redux/store";
 import { setUser } from "@/redux/slices/authSlice";
+import { confettiFireworks } from "@/components/celebration-confetti";
 
 
 
 const PaymentStatus = () => {
 
-
   const router = useRouter();
+
   const dispatch = useAppDispatch();
 
   const order_id = useSearchParams().get("id");
@@ -42,8 +43,10 @@ const PaymentStatus = () => {
   useEffect(() => {
     if (paymentStatus === "SUCCESS" && data?.data?.user) {
       dispatch(setUser(data?.data.user));
+      confettiFireworks();
     }
   }, [paymentStatus, data]);
+
 
 
   return (
@@ -68,7 +71,7 @@ const PaymentStatus = () => {
               {/* Status area */}
               {renderContent()}
 
-              {/* Order ID block — stacked layout to avoid overflow */}
+              {/* Order ID block */}
               {order_id && isResolved && (
                 <motion.div
                   initial={{ opacity: 0 }}
