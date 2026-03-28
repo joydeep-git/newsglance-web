@@ -9,6 +9,10 @@ import { useRouter } from "next/navigation";
 import ShareNewsBar from "./shareNewsBar";
 import AiTabs from "./ai-tabs";
 import { Button } from "@/components/ui/button";
+import SingleCardAd from "../advertisements/singleCardAd";
+import BannerAd from "../advertisements/bannerAd";
+import FinanceSidebar from "../news-components/finance-sidebar";
+import { useInfiniteHomepageNews } from "@/hooks/newsHooks";
 
 
 const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
@@ -19,6 +23,8 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
   const { title, publishedAt, section, thumbnail, excerpt, body, heroImage, author, readTime, publication } = article;
 
   const displayImage = heroImage ?? thumbnail;
+
+  const { data: otherNews, isLoading: isOtherNewsLoading } = useInfiniteHomepageNews();
 
   return (
     <div className="py-6 md:py-8">
@@ -134,10 +140,16 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
                 <ShareNewsBar title={title} orientation="horizontal" />
               </div>
 
-              {/* AI actions — mobile (between image and body) */}
-              <div className="lg:hidden mb-6">
-                <AiTabs title={title} />
+              {/* Summerization */}
+              <div className="mb-6">
+                <AiTabs />
               </div>
+
+
+              <div className="my-3 w-full overflow-hidden">
+                <BannerAd />
+              </div>
+
 
               {/* Article body */}
               {body ? (
@@ -159,9 +171,17 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
           </div>
         </div>
 
-        {/* ─── RIGHT SIDEBAR ─── */}
-        <div className="hidden lg:flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
-          <AiTabs title={title} />
+        {/* ─── Ad section ─── */}
+        <div className="gap-4 lg:sticky lg:self-start">
+          <SingleCardAd />
+
+          <FinanceSidebar
+            articles={otherNews?.pages.flatMap((p) => p.featured) ?? []}
+            isLoading={isOtherNewsLoading}
+            viewAllHref="/"
+            title="Other News"
+            length={15}
+          />
         </div>
 
       </div>

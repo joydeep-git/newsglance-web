@@ -25,17 +25,17 @@ const HomepageLayout = () => {
     fetchNextPage();
   }, [fetchNextPage]);
 
-  // Flatten all pages of featured articles
+  // all pages of featured articles
   const allFeatured = useMemo(
     () => data?.pages.flatMap((p) => p.featured) ?? [],
     [data]
   );
 
-  // Finance + tech come only from the first page (they don't paginate)
+  // Finance + tech come only from the first page
   const financeArticles = data?.pages[0]?.finance ?? [];
   const techArticles = data?.pages[0]?.tech ?? [];
 
-  // Split: hero = [0], breaking row = [1..4], featured rows = [5..11], infinite feed starts at [12]
+
   const heroArticle = allFeatured[0] ?? null;
   const breakingArticles = allFeatured.slice(1, 5);    // 4 cards in the breaking row
   const previewArticles = allFeatured.slice(5, 13);    // 2 rows × ~4 cards
@@ -44,9 +44,7 @@ const HomepageLayout = () => {
   return (
     <div className="py-6 md:py-8 flex flex-col gap-10">
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          ROW 1: Hero (left) + Finance sidebar (right)
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/*Hero (left) */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_320px] gap-6 lg:gap-8 items-start">
 
         {/* Hero — first featured article */}
@@ -65,9 +63,7 @@ const HomepageLayout = () => {
 
       </div>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          ROW 2: Breaking News — 4-card grid row
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* Breaking News */}
       <section>
         <div className="flex items-center gap-2 mb-4">
           <span className="block w-1 h-5 rounded-full bg-red-500" />
@@ -94,9 +90,7 @@ const HomepageLayout = () => {
         </div>
       </section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          ROW 3: Featured preview — 2 rows of medium cards
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* Featured preview */}
       <section>
         <SectionHeader title="Featured Stories" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -115,9 +109,7 @@ const HomepageLayout = () => {
         </div>
       </section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          ROW 4: Tech banner — horizontal scroll
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* Tech banner */}
       <section>
         <SectionHeader title="Technology" viewAllHref="/?category=technology" />
         <div className="relative">
@@ -141,9 +133,7 @@ const HomepageLayout = () => {
         </div>
       </section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          ROW 5: Infinite feed — rest of featured articles
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* Infinite news */}
       {!isLoading && (
         <section>
           <SectionHeader title="More News" />
