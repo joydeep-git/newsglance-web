@@ -2,11 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { ArticleCard } from "@/types/newsTypes";
 import { CalendarDays, ArrowUpRight } from "lucide-react";
 import dateUtlity from "@/utils/dateUtility";
 
 export function NewsCardHero({ article }: { article: ArticleCard }) {
+
+  const [imgError, setImgError] = useState(false);
+  
   const { id, title, publishedAt, section, thumbnail, excerpt } = article;
 
   return (
@@ -14,7 +18,7 @@ export function NewsCardHero({ article }: { article: ArticleCard }) {
       <Link href={`/article/${id}`} className="block">
         {/* Image */}
         <div className="relative w-full overflow-hidden rounded-xl aspect-video lg:aspect-21/9">
-          {thumbnail ? (
+          {thumbnail && !imgError ? (
             <Image
               src={thumbnail}
               alt={title}
@@ -22,6 +26,8 @@ export function NewsCardHero({ article }: { article: ArticleCard }) {
               sizes="(max-width: 1024px) 100vw, 75vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
+              unoptimized={thumbnail.startsWith('http')}
+              onError={() => setImgError(true)}
             />
           ) : (
             <div className="w-full h-full bg-muted" />

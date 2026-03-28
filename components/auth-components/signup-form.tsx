@@ -60,8 +60,6 @@ const SignupForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void
 
     onSubmit: (values) => {
 
-      console.log("Signup form data", values);
-
       if (!otpSent) {
         toast.error("Verify email!");
         return;

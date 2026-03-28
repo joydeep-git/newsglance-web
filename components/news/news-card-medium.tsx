@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { ArticleCard } from "@/types/newsTypes";
 import { CalendarDays } from "lucide-react";
 import dateUtlity from "@/utils/dateUtility";
@@ -9,7 +10,8 @@ import dateUtlity from "@/utils/dateUtility";
 
 
 const NewsCardMedium = ({ article }: { article: ArticleCard }) => {
-
+  
+  const [imgError, setImgError] = useState(false);
 
   const { id, title, publishedAt, section, thumbnail, excerpt } = article;
 
@@ -20,13 +22,15 @@ const NewsCardMedium = ({ article }: { article: ArticleCard }) => {
 
         {/* Image */}
         <div className="relative w-full overflow-hidden rounded-xl aspect-16/10 mb-3 shrink-0">
-          {thumbnail ? (
+          {thumbnail && !imgError ? (
             <Image
               src={thumbnail}
               alt={title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
+              unoptimized={thumbnail.startsWith('http')}
+              onError={() => setImgError(true)}
             />
           ) : (
             <div className="w-full h-full bg-muted rounded-xl" />

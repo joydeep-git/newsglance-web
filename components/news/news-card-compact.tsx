@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { ArticleCard } from "@/types/newsTypes";
 import { CalendarDays } from "lucide-react";
 import dateUtlity from "@/utils/dateUtility";
 
 const NewsCardCompact = ({ article }: { article: ArticleCard }) => {
-
+  const [imgError, setImgError] = useState(false);
 
   const { id, title, publishedAt, section, thumbnail } = article;
 
@@ -16,7 +17,7 @@ const NewsCardCompact = ({ article }: { article: ArticleCard }) => {
 
       <Link href={`/article/${id}`} className="flex gap-3 items-start py-3 border-b border-border/60 last:border-0">
 
-        {thumbnail && (
+        {thumbnail && !imgError && (
           <div className="relative shrink-0 w-16 h-14 rounded-lg overflow-hidden">
             <Image
               src={thumbnail}
@@ -24,6 +25,8 @@ const NewsCardCompact = ({ article }: { article: ArticleCard }) => {
               fill
               sizes="64px"
               className="object-cover transition-transform duration-500 group-hover:scale-110"
+              unoptimized={thumbnail.startsWith('http')}
+              onError={() => setImgError(true)}
             />
           </div>
         )}
