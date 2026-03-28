@@ -100,3 +100,14 @@ export const useNewssummary = (newsId: string) => useQuery<NewssummaryApiType>({
   staleTime: 1000 * 60 * 5,
   gcTime: 1000 * 60 * 5,
 });
+
+
+export const useNewsAudio = (newsId: string) => useQuery({
+  queryKey: ["news-audio", newsId],
+  queryFn: () => newsService.generateAudio(newsId),
+  enabled: false,
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 5,
+})
