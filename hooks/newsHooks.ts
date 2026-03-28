@@ -1,5 +1,5 @@
 import newsService from "@/services/newsService";
-import { ArticleCard, ArticleDetail, HomeResponse, NewsResponse } from "@/types/newsTypes";
+import { ArticleCard, ArticleDetail, HomeResponse, NewsResponse, NewssummaryApiType } from "@/types/newsTypes";
 import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
 
 
@@ -88,4 +88,15 @@ export const useGetBookmarks = () => useQuery<ArticleCard[]>({
   queryFn: () => newsService.getSaved(),
   refetchOnWindowFocus: false,
   staleTime: 1000 * 60 * 5,
+});
+
+
+export const useNewssummary = (newsId: string) => useQuery<NewssummaryApiType>({
+  queryKey: ["news-summary", newsId],
+  queryFn: () => newsService.generateNews(newsId),
+  enabled: false,
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 5,
 });

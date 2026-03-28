@@ -1,3 +1,5 @@
+import { UserDataType } from "./authTypes";
+import { ApiBaseResponse, FileDataType } from "./globalTypes";
 
 export type GuardianArticle = {
   id: string;
@@ -76,9 +78,36 @@ export type FinanceSidebarProps = {
   articles: ArticleCard[];
   isLoading: boolean;
   viewAllHref?: string;
+  title?: string;
+  length?: number;
 }
+
 
 export type HeroSectionProps = {
   article: ArticleCard | null | undefined;
   isLoading: boolean;
+}
+
+
+export interface NewssummaryApiType extends ApiBaseResponse {
+  data: {
+    user: UserDataType;
+    summary: string;
+  }
+}
+
+
+export interface NewsAudioApiType extends ApiBaseResponse {
+  data: {
+    user: UserDataType;
+    audio: FileDataType
+  }
+}
+
+
+export interface NewssummaryApiType extends ApiBaseResponse {
+  data: {
+    user: UserDataType;
+    summary: string;
+  }
 }

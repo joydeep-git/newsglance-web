@@ -1,4 +1,4 @@
-import { ArticleCard, ArticleDetail, HomeResponse, NewsResponse } from "@/types/newsTypes";
+import { ArticleCard, ArticleDetail, HomeResponse, NewsAudioApiType, NewsResponse, NewssummaryApiType } from "@/types/newsTypes";
 import ApiService from "./apiService";
 
 
@@ -47,6 +47,14 @@ class NewsService extends ApiService {
   public async singleNews(newsId: string): Promise<ArticleDetail> {
     const res = await this.api.get(`/single/${newsId}`);
     return res.data;
+  }
+
+  public async generateNews(newsId: string): Promise<NewssummaryApiType> {
+    return await this.api.get(`/summary/${newsId}`);
+  }
+
+  public async generateAudio(newsId: string): Promise<NewsAudioApiType> {
+    return await this.api.get(`/audio/${newsId}`);
   }
 
 }
