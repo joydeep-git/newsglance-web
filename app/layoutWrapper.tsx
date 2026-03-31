@@ -22,20 +22,19 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
 
-      <AuthWrapper className="flex flex-col relative pt-[48px] flex-1 h-screen overflow-y-auto">
+      {/* Single scroll */}
+      <AuthWrapper className="flex flex-col relative pt-[48px] min-h-screen">
 
         <Navbar />
         <NavbarOptionsBar />
 
-        {/* for fuel price */}
-
-        <div className="flex flex-col overflow-y-auto flex-1">
+        <div className="flex flex-col flex-1">
           {children}
         </div>
 
-      </AuthWrapper>
+        <Footer />
 
-      <Footer />
+      </AuthWrapper>
 
       <AuthPopup />
 
