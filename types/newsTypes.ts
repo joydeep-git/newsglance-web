@@ -111,3 +111,17 @@ export interface NewssummaryApiType extends ApiBaseResponse {
     summary: string;
   }
 }
+
+
+export interface AiNotAuthStateProps {
+  onLogin: () => void;
+  description: string;
+}
+
+
+export interface AiErrorStateProps {
+  message: string;
+  onRetry: () => void;
+}
+
+

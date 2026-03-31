@@ -13,6 +13,7 @@ export interface FileDataType {
   createdAt: Date;
   type: "image" | "audio";
   isDefaultFile: boolean;
+  duration?: number | null;
 };
 
 
