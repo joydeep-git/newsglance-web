@@ -26,6 +26,10 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
 
   const { data: otherNews, isLoading: isOtherNewsLoading } = useInfiniteHomepageNews();
 
+  const isYouTubeUrl = (url: string): boolean => {
+    return url.includes("youtube.com") || url.includes("youtu.be") || url.includes("youtube-nocookie.com");
+  };
+
   return (
     <div className="py-6 md:py-8">
 
@@ -115,14 +119,23 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
               {/* Hero image */}
               {displayImage ? (
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-4">
-                  <Image
-                    src={displayImage}
-                    alt={title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 65vw"
-                    className="object-cover"
-                    priority
-                  />
+                  {
+                    isYouTubeUrl(displayImage)
+                      ? <iframe
+                        src={displayImage}
+                        className="w-full aspect-video rounded-lg"
+                        allowFullScreen
+                        allow="accelerometer; camera; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+                      />
+                      : <Image
+                        src={displayImage}
+                        alt={title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 65vw"
+                        className="object-cover"
+                        priority
+                      />
+                  }
                 </div>
               ) : (
                 <div className="w-full aspect-video rounded-xl bg-muted mb-4" />

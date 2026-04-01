@@ -28,7 +28,7 @@ const AiTabs = () => {
           </div>
           <div>
             <p className="text-sm font-semibold leading-none">AI Features</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">Powered by {activeTab === "summary" ? "Gemini" : "AWS Polly" }</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5">Powered by AWS {activeTab === "summary" ? "Bedrock and Gemini" : "Polly" }</p>
           </div>
         </div>
 
