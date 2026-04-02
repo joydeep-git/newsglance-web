@@ -32,9 +32,9 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
           {children}
         </div>
 
-        <Footer />
-
       </AuthWrapper>
+
+      <Footer />
 
       <AuthPopup />
 
