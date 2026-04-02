@@ -40,7 +40,7 @@ class NewsService extends ApiService {
   }
 
   public async checkBookmark(newsId: string): Promise<boolean> {
-    const res = await this.api.get(`/bookmark/check/${newsId}`); console.log("Check bookmark", res);
+    const res = await this.api.get(`/bookmark/check/${newsId}`);
     return res.data;
   }
 

@@ -90,11 +90,11 @@ export const useCheckBookmark = (newsId: string, userId: string | undefined) => 
 
 
 
-export const useGetBookmarks = (userId: string) => useQuery<ArticleCard[]>({
+export const useGetBookmarks = (userId: string | undefined) => useQuery<ArticleCard[]>({
   queryKey: ["get-bookmarks", userId],
   queryFn: () => newsService.getSaved(),
-  refetchOnWindowFocus: false,
-  staleTime: 1000 * 60 * 5,
+  refetchOnWindowFocus: true,
+  enabled: !!userId,
 });
 
 

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { CreditCard, Crown, LogOut, Menu, ReceiptIndianRupee, Settings, User } from "lucide-react";
+import { Bookmark, CreditCard, Crown, LogOut, Menu, ReceiptIndianRupee, Settings, User } from "lucide-react";
 import MenuRow from "./menuRow";
 import { useSignOut } from "@/hooks/authHooks";
 import { setLogout } from "@/redux/slices/authSlice";
@@ -17,6 +17,7 @@ import { setLoginState } from "@/redux/slices/uiSlice";
 // Items only visible when logged IN
 const authMenuOptions: Record<string, { url: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> }> = {
   "Profile": { url: "/profile", icon: User },
+  "Saved News": { url: "/saved-news", icon: Bookmark },
   "Settings": { url: "/settings?active=profile", icon: Settings },
   "Billing & Payments": { url: "/settings?active=billing", icon: CreditCard },
 };
