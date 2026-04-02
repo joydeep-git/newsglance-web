@@ -82,9 +82,16 @@ export const useDeleteBookmark = () => useMutation<unknown, Error, string>({
 });
 
 
+export const useCheckBookmark = (newsId: string, userId: string | undefined) => useQuery({
+  queryKey: ["check-bookmark", newsId, userId],
+  queryFn: () => newsService.checkBookmark(newsId),
+  enabled: !!newsId && !!userId,
+});
 
-export const useGetBookmarks = () => useQuery<ArticleCard[]>({
-  queryKey: ["get-bookmarks"],
+
+
+export const useGetBookmarks = (userId: string) => useQuery<ArticleCard[]>({
+  queryKey: ["get-bookmarks", userId],
   queryFn: () => newsService.getSaved(),
   refetchOnWindowFocus: false,
   staleTime: 1000 * 60 * 5,

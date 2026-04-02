@@ -30,12 +30,17 @@ class NewsService extends ApiService {
   }
 
   public async saveBookmark(newsId: string): Promise<{ newsId: string; userId: string }> {
-    const res = await this.api.get(`/bookmark/${newsId}`);
+    const res = await this.api.post(`/bookmark/${newsId}`);
     return res.data;
   }
 
   public async getSaved(): Promise<ArticleCard[]> {
-    const res = await this.api.get("/bookmarks");
+    const res = await this.api.get("/bookmark");
+    return res.data;
+  }
+
+  public async checkBookmark(newsId: string): Promise<boolean> {
+    const res = await this.api.get(`/bookmark/check/${newsId}`); console.log("Check bookmark", res);
     return res.data;
   }
 

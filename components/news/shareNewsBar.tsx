@@ -1,17 +1,18 @@
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import { Bookmark, Facebook, Share2, Twitter } from "lucide-react";
+import { Facebook, Share2, Twitter } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const ShareNewsBar = ({ title, orientation = "vertical" }: { title: string; orientation: "vertical" | "horizontal" }) => {
+const ShareNewsBar = ({ title, orientation = "vertical" }: { title: string; orientation: "vertical" | "horizontal"; }) => {
 
+  const newsId = usePathname().replace("/article/", "");
   const url = window.location.href;
 
   const copyURL = () => {
     navigator.clipboard.writeText(url);
     toast.success("URL copied!");
   }
-
 
   return (
     <div className={`flex ${orientation === "vertical" ? "flex-col" : "flex-row"} items-center gap-3 py-3`}>
@@ -50,12 +51,8 @@ const ShareNewsBar = ({ title, orientation = "vertical" }: { title: string; orie
       >
         <Facebook className="h-3.5 w-3.5" />
       </a>
-      <button
-        aria-label="Save article"
-        className="flex items-center justify-center w-8 h-8 rounded-full bg-muted hover:bg-accent transition-colors"
-      >
-        <Bookmark className="h-3.5 w-3.5 text-muted-foreground" />
-      </button>
+
+
     </div>
   );
 }

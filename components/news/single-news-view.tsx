@@ -13,6 +13,7 @@ import SingleCardAd from "../advertisements/singleCardAd";
 import BannerAd from "../advertisements/bannerAd";
 import FinanceSidebar from "../news-components/finance-sidebar";
 import { useInfiniteHomepageNews } from "@/hooks/newsHooks";
+import BookmarkButton from "./bookmark-button";
 
 
 const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
@@ -102,6 +103,10 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
               <Clock className="h-3.5 w-3.5" />
               <span>{readTime} min read</span>
             </div>
+
+            <Separator orientation="vertical" className="h-4" />
+
+            <BookmarkButton />
 
           </div>
 
