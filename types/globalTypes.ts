@@ -64,3 +64,20 @@ export type AudioPlayerType = {
   audioTrack: FileDataType | null;
   onClose: () => void;
 }
+
+
+export type ContactCardProps = {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  href?: string;
+  copyable?: boolean;
+  delay?: number;
+}
+
+export type SocialLinkItemProps = {
+  icon: React.ElementType;
+  label: string;
+  href: string;
+  delay?: number;
+}
