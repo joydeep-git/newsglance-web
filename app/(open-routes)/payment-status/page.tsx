@@ -18,7 +18,7 @@ import { confettiFireworks } from "@/components/celebration-confetti";
 
 
 
-const PaymentStatus = () => {
+const PaymentStatusContent = () => {
 
   const router = useRouter();
 
@@ -45,19 +45,11 @@ const PaymentStatus = () => {
       dispatch(setUser(data?.data.user));
       confettiFireworks();
     }
-  }, [paymentStatus, data]);
+  }, [paymentStatus, data, dispatch]);
 
 
 
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border">
-          <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
-        </div>
-      </div>
-    } >
-
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <motion.div
           variants={containerVariants}
@@ -121,9 +113,21 @@ const PaymentStatus = () => {
           </Card>
         </motion.div>
       </div>
-
-    </Suspense>
   )
+};
+
+const PaymentStatus = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border">
+          <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
+        </div>
+      </div>
+    }>
+      <PaymentStatusContent />
+    </Suspense>
+  );
 };
 
 export default PaymentStatus;

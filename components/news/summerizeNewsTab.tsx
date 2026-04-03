@@ -44,7 +44,7 @@ const SummerizeNews = () => {
 
   useEffect(() => {
     if (data?.data?.user) dispatch(setUser(data.data.user));
-  }, [data]);
+  }, [data, dispatch]);
 
   // Toast error when failed
   useEffect(() => {

@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "motion/react";
-import { Home, ArrowLeft, AlertTriangle } from "lucide-react";
+import { Home, AlertTriangle } from "lucide-react";
 import { Particles } from "@/components/ui/particles";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";

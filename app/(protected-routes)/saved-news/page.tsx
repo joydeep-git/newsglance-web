@@ -4,7 +4,7 @@ import { useGetBookmarks } from "@/hooks/newsHooks";
 import { useAppSelector } from "@/redux/store";
 import SavedNewsCard from "@/components/news/saved-news-card";
 import { NewsCardMediumSkeleton } from "@/components/news/news-card-skeleton";
-import { Bookmark, BookmarkX, Loader2 } from "lucide-react";
+import { Bookmark, BookmarkX } from "lucide-react";
 
 
 const SavedNews = () => {

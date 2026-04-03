@@ -57,7 +57,7 @@ const AudioNews = () => {
   useEffect(() => {
     if (data?.data?.user) dispatch(setUser(data.data.user));
     if (data?.data?.audio) dispatch(setAudioFile(data.data.audio));
-  }, [data]);
+  }, [data, dispatch]);
 
 
   useEffect(() => {

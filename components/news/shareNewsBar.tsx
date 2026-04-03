@@ -2,11 +2,9 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Facebook, Share2, Twitter } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 const ShareNewsBar = ({ title, orientation = "vertical" }: { title: string; orientation: "vertical" | "horizontal"; }) => {
 
-  const newsId = usePathname().replace("/article/", "");
   const url = window.location.href;
 
   const copyURL = () => {
