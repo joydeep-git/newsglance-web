@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface InteractiveHoverButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+interface InteractiveHoverButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> { }
 
 export const LoginButton = React.forwardRef<
   HTMLButtonElement,
@@ -20,7 +20,7 @@ export const LoginButton = React.forwardRef<
       {...props}
     >
 
-      <div className="hidden md:block">
+      <div className="block">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-project transition-all duration-300 group-hover:scale-[100.8]"></div>
           <span className="inline-block transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0 font-jakarta">

@@ -5,18 +5,6 @@ export type DateUnit = 'days' | 'weeks' | 'months' | 'years';
 export type DateDirection = 'previous' | 'next';
 
 
-// export interface DateRangeOptions {
-//   unit: DateUnit;
-//   count: number;
-//   direction?: DateDirection;
-// }
-
-// export interface ISODateRangeOptions {
-//   count: number;
-//   unit: DateUnit;
-//   direction: DateDirection;
-// }
-
 export interface FileDataType {
   id: string;
   name: string;
@@ -25,6 +13,7 @@ export interface FileDataType {
   createdAt: Date;
   type: "image" | "audio";
   isDefaultFile: boolean;
+  duration?: number | null;
 };
 
 
@@ -58,5 +47,37 @@ export interface LoginSuccessResponse<T> extends ApiSuccessResponse<T> {
 export interface UpdateUserBodyType {
   name?: string;
   username?: string;
+  phoneNumber?: string;
   defaultCountry?: string;
+}
+
+
+export type CountryMapType = {
+  name: string;
+  countrycode: string;
+  currency: string;
+  flag: string;
+}
+
+
+export type AudioPlayerType = {
+  audioTrack: FileDataType | null;
+  onClose: () => void;
+}
+
+
+export type ContactCardProps = {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  href?: string;
+  copyable?: boolean;
+  delay?: number;
+}
+
+export type SocialLinkItemProps = {
+  icon: React.ElementType;
+  label: string;
+  href: string;
+  delay?: number;
 }

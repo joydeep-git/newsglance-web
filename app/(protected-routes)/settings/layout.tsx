@@ -3,16 +3,8 @@
 import MaxWidthWrapper from "@/components/maxWidthWrapper"
 import { ReactNode } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { User, Shield, CreditCard, Receipt } from "lucide-react";
+import { User, Shield, CreditCard } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const settingsNavItems = [
-  { label: "Profile", value: "profile", icon: User },
-  { label: "Account", value: "account", icon: Shield },
-  { label: "Subscription", value: "subscription", icon: Receipt },
-  { label: "Billing", value: "billing", icon: CreditCard },
-  // { label: "Notifications", value: "notifications", icon: Bell },
-];
 
 const SettingsLayout = ({ children }: { children: ReactNode }) => {
 
@@ -23,6 +15,14 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
   const handleTabChange = (value: string) => {
     router.push(`/settings?active=${value}`);
   };
+
+
+  const settingsNavItems = [
+    { label: "Profile", value: "profile", icon: User },
+    { label: "Account", value: "account", icon: Shield },
+    { label: "Subscription & Billing", value: "subscription", icon: CreditCard },
+  ];
+
 
   return (
     <MaxWidthWrapper>

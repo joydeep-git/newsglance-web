@@ -19,7 +19,7 @@ const ProfilePage = () => {
   const { user: userData } = useAppSelector(state => state.auth);
 
   const getCountryName = (code: string) => {
-    return countryMap[code] || code;
+    return countryMap.get(code)?.name || code;
   };
 
 
@@ -46,7 +46,7 @@ const ProfilePage = () => {
                 />
 
                 {userData.isPremium && (
-                  <div className="absolute -top-2 -right-2 bg-slate-900 p-1.5 rounded-full shadow-md">
+                  <div className="absolute -top-2 -left-2 bg-slate-900 p-1.5 rounded-full shadow-md">
                     <Crown size={14} className="text-yellow-400" />
                   </div>
                 )}
@@ -115,7 +115,7 @@ const ProfilePage = () => {
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1.5">Member Since</p>
                 <div className="flex items-center gap-2 text-slate-900">
                   <Calendar size={14} className="text-slate-400 shrink-0" />
-                  <p className="text-sm">{dateUtility.formatDate(userData.createdAt)}</p>
+                  <p className="text-sm">{dateUtility.formatDateTime(userData.createdAt)}</p>
                 </div>
               </div>
 
@@ -123,7 +123,7 @@ const ProfilePage = () => {
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1.5">Last Updated</p>
                 <div className="flex items-center gap-2 text-slate-900">
                   <Calendar size={14} className="text-slate-400 shrink-0" />
-                  <p className="text-sm">{dateUtility.formatDate(userData.updatedAt)}</p>
+                  <p className="text-sm">{dateUtility.formatDateTime(userData.updatedAt)}</p>
                 </div>
               </div>
             </div>
@@ -156,7 +156,7 @@ const ProfilePage = () => {
               {userData.isPremium && userData.planExpiryDate && (
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/10">
                   <p className="text-xs font-medium text-white/60 uppercase tracking-wide mb-2">Plan Expires</p>
-                  <p className="text-base font-semibold">{dateUtility.formatDate(userData.planExpiryDate)}</p>
+                  <p className="text-base font-semibold">{dateUtility.formatDateTime(userData.planExpiryDate)}</p>
                 </div>
               )}
 

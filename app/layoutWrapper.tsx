@@ -7,20 +7,28 @@ import NavbarOptionsBar from "@/components/navbar-components/navbar-options";
 import AuthPopup from "@/components/auth-components/auth-popup";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthWrapper from "./authWrapper";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import AudioPlayer from "@/components/audioPlayer";
+import { deleteAudioFile } from "@/redux/slices/newsSlice";
 
 const LayoutWrapper = ({ children }: { children: ReactNode }) => {
 
   const queryClient = new QueryClient();
 
+  const dispatch = useAppDispatch();
+
+  const { audioFile } = useAppSelector(state => state.news);
+
   return (
     <QueryClientProvider client={queryClient}>
 
-      <AuthWrapper className="flex flex-col relative pt-[48px] flex-1 h-screen overflow-y-auto">
+      {/* Single scroll */}
+      <AuthWrapper className="flex flex-col relative pt-[48px] min-h-screen">
 
         <Navbar />
         <NavbarOptionsBar />
 
-        <div className="flex flex-col overflow-y-auto flex-1">
+        <div className="flex flex-col flex-1">
           {children}
         </div>
 
@@ -29,6 +37,14 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
       <Footer />
 
       <AuthPopup />
+
+      {
+        audioFile &&
+        <AudioPlayer
+          audioTrack={audioFile}
+          onClose={() => dispatch(deleteAudioFile())}
+        />
+      }
 
     </QueryClientProvider>
   )

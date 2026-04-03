@@ -70,7 +70,7 @@ const Footer = () => {
                 <Link href="/" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   Advertise
                 </Link>
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href="/contact" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   Contact
                 </Link>
               </div>

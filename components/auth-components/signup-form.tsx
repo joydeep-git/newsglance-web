@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import PhoneInputWithCountry from "./PhoneInputWithCountry";
 import { AuthPageTypes } from "@/types/authTypes";
 import { useSignup } from "@/hooks/authHooks";
 import { SignupFormSchema } from "@/schema/authSchema";
@@ -47,6 +48,8 @@ const SignupForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void
     initialValues: {
       username: "",
       name: "",
+      phoneNumber: "",
+      defaultCountry: "IN",
       email: "",
       password: "",
       confirmPassword: "",
@@ -62,13 +65,15 @@ const SignupForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void
         return;
       }
 
-      signUp(values, {
-        onSuccess: (data) => {
-          changeState("login");
-          toast.success(data?.message);
-        },
-        onError: (err) => toast.error(err.message),
-      });
+      signUp(values,
+        {
+          onSuccess: (data) => {
+            changeState("login");
+            toast.success(data?.message);
+          },
+          onError: (err) => toast.error(err.message),
+        }
+      );
     },
   });
 
@@ -136,6 +141,26 @@ const SignupForm = ({ changeState }: { changeState: (val: AuthPageTypes) => void
             <Input type="text" id="name" placeholder="John Doe" {...formik.getFieldProps("name")} />
             {formik.touched.name && formik.errors.name && (
               <p className="text-xs text-red-500">{formik.errors.name}</p>
+            )}
+          </div>
+
+
+          {/* PHONE NUMBER */}
+          <div className="grid gap-3">
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+
+            <PhoneInputWithCountry
+              id="phoneNumber"
+              value={formik.values.phoneNumber}
+              onChange={(val) => formik.setFieldValue("phoneNumber", val || "")}
+              onCountryChange={(country) => formik.setFieldValue("defaultCountry", country || "IN")}
+              defaultCountry={formik.values.defaultCountry}
+              placeholder=""
+              aria-invalid={!!(formik.touched.phoneNumber && formik.errors.phoneNumber)}
+            />
+
+            {formik.errors.phoneNumber && (
+              <p className="text-xs text-red-500">{formik.errors.phoneNumber}</p>
             )}
           </div>
 
