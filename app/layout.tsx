@@ -3,6 +3,9 @@ import { Inter, Montserrat } from "next/font/google";
 import LayoutWrapper from "./layoutWrapper";
 import { Toaster } from "@/components/ui/sonner";
 import { ReduxProvider } from "@/redux/reduxProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next"
+
 
 import "./globals.css";
 
@@ -46,6 +49,9 @@ export default function RootLayout({
           <Toaster richColors closeButton duration={3000} position="top-right" />
 
         </ReduxProvider>
+
+        <Analytics />
+        <SpeedInsights />
 
       </body>
     </html>
