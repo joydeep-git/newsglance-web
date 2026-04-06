@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, ReactNode } from "react";
+import { memo, ReactNode, useState } from "react";
 import Footer from "@/components/footer-components/footer";
 import Navbar from "@/components/navbar-components/navbar";
 import NavbarOptionsBar from "@/components/navbar-components/navbar-options";
@@ -13,7 +13,7 @@ import { deleteAudioFile } from "@/redux/slices/newsSlice";
 
 const LayoutWrapper = ({ children }: { children: ReactNode }) => {
 
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
 
   const dispatch = useAppDispatch();
 
