@@ -24,7 +24,7 @@
 | 🖥️ **Web Repository** | [github.com/joydeep-git/newsglance-web](https://github.com/joydeep-git/newsglance-web) |
 | 📦 **API Repository** | [github.com/joydeep-git/newsglance-api](https://github.com/joydeep-git/newsglance-api) |
 | 📖 **API Docs** | [newsglance.apidog.io](https://newsglance.apidog.io) |
-| ☁️ **API (CloudFront)** | [d3g4hp7x5o3v7g.cloudfront.net](https://d3g4hp7x5o3v7g.cloudfront.net) |
+| ☁️ **API ( EC2 + CloudFront )** | [d3g4hp7x5o3v7g.cloudfront.net](https://d3g4hp7x5o3v7g.cloudfront.net) |
 
 <br/>
 
