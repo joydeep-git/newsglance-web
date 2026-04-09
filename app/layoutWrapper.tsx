@@ -10,6 +10,7 @@ import AuthWrapper from "./authWrapper";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import AudioPlayer from "@/components/audioPlayer";
 import { deleteAudioFile } from "@/redux/slices/newsSlice";
+import AddNumberPopup from "@/components/auth-components/addNumberPopup";
 
 const LayoutWrapper = ({ children }: { children: ReactNode }) => {
 
@@ -36,7 +37,11 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
 
       <Footer />
 
+      <AddNumberPopup />
+
       <AuthPopup />
+
+
 
       {
         audioFile &&

@@ -95,9 +95,12 @@ const GoogleAuthButton = () => {
           size: "large",
           text: "continue_with",
           width: "100%",
+          logo_alignment: "center",
         });
+
       } else {
         console.error("Google Identity Services script failed to load properly.");
+        toast.error("Google authentication failed! Please contact support.");
       }
     };
 
@@ -113,7 +116,7 @@ const GoogleAuthButton = () => {
 
 
   return (
-    <div className="w-full">
+    <div className="w-full mx-auto">
       <div
         ref={buttonRef}
         style={{ flex: 1, pointerEvents: isPending ? "none" : "auto", opacity: isPending ? 0.5 : 1 }}

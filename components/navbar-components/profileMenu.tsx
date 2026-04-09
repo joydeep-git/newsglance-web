@@ -52,7 +52,7 @@ const ProfileMenu = () => {
           user && isAuth
             ? (
               <Avatar className="h-9 w-9 ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all">
-                <AvatarImage src={user?.avatarId ? user?.avatar?.url : defaultValues.avatar} />
+                <AvatarImage src={user?.avatar?.url ?? defaultValues.avatar} />
               </Avatar>
             )
             : (
@@ -71,7 +71,7 @@ const ProfileMenu = () => {
         sideOffset={8}
       >
 
-        {/* ── AUTH: name/email header ── */}
+        {/* name/email header */}
         {isAuth && user && (
           <div className="px-4 pt-4 pb-2">
             <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ const ProfileMenu = () => {
           </div>
         )}
 
-        {/* ── GUEST: animated login button ── */}
+        {/* login button */}
         {!isAuth && !user && (
           <div className="px-4 pt-4 pb-2">
             <LoginButton
@@ -103,7 +103,7 @@ const ProfileMenu = () => {
 
         <div className="py-1">
 
-          {/* Auth-only items: Profile, Settings, Billing */}
+          {/* Auth-only Profile, Settings, Billing */}
           {isAuth && user && (
             Object.entries(authMenuOptions).map(([label, { icon: ItemIcon, url }]) => (
               <MenuRow
@@ -115,8 +115,8 @@ const ProfileMenu = () => {
             ))
           )}
 
-          {/* Guest-only items: Pricing */}
-          {!isAuth && !user && (
+
+          {
             Object.entries(guestMenuOptions).map(([label, { icon: ItemIcon, url }]) => (
               <MenuRow
                 key={label}
@@ -125,12 +125,12 @@ const ProfileMenu = () => {
                 onClick={() => router.push(url)}
               />
             ))
-          )}
+          }
 
-          {/* Help & Support — shown to everyone */}
+
           <HelpAndSupport />
 
-          {/* Log Out — auth only */}
+
           {isAuth && user && (
             <MenuRow
               icon={<LogOut className="h-4 w-4" />}
