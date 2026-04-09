@@ -41,7 +41,6 @@ const ProfileMenu = () => {
   const handleSignOut = () => {
     dispatch(setLogout());
     refetch();
-    router.replace("/");
   };
 
 
