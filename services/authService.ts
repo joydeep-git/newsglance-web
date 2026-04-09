@@ -1,5 +1,5 @@
 import ApiService from "./apiService";
-import { LoginBodyType, RegisterBodyType, ResetPassBodyType, UserDataType } from "@/types/authTypes";
+import { GoogleUpdateBodyType, LoginBodyType, RegisterBodyType, ResetPassBodyType, UserDataType } from "@/types/authTypes";
 import { ApiBaseResponse, ApiSuccessResponse, LoginSuccessResponse } from "@/types/globalTypes";
 
 
@@ -43,6 +43,10 @@ class AuthService extends ApiService {
 
   public async googleLogin(token: string): Promise<LoginSuccessResponse<UserDataType>> {
     return await this.api.post("/google/authorize", { googleToken: token });
+  }
+
+  public async googleUpdate(data: GoogleUpdateBodyType): Promise<ApiSuccessResponse<UserDataType>> {
+    return this.api.post("/google/update", data);
   }
 
 }

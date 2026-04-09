@@ -1,5 +1,5 @@
 import authService from "@/services/authService";
-import { LoginBodyType, RegisterBodyType, ResetPassBodyType } from "@/types/authTypes";
+import { GoogleUpdateBodyType, LoginBodyType, RegisterBodyType, ResetPassBodyType } from "@/types/authTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 
@@ -33,6 +33,10 @@ export const useDeleteAccount = () => useMutation({
 
 export const useGoogleAuth = () => useMutation({
   mutationFn: (token: string) => authService.googleLogin(token),
+})
+
+export const useGoogleUpdate = () => useMutation({
+  mutationFn: (data: GoogleUpdateBodyType) => authService.googleUpdate(data),
 })
 
 

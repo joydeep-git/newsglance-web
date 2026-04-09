@@ -23,6 +23,8 @@ export type UserDataType = {
   defaultCountry: string | null;
   createdAt: Date;
   updatedAt: Date;
+  isNumVerified: boolean;
+  isGoogle: boolean;
 }
 
 export type OtpType = "register" | "login" | "forget-password" | "delete-account";
@@ -59,6 +61,11 @@ export type GoogleAuthResponseType = {
   client_id: string;
   credential: string;
   select_by: string;
+}
+
+export type GoogleUpdateBodyType = {
+  phoneNumber: string;
+  defaultCountry: string;
 }
 
 
