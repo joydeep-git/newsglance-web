@@ -81,3 +81,10 @@ export type SocialLinkItemProps = {
   href: string;
   delay?: number;
 }
+
+
+export type FuelDataType = {
+  state: string;
+  petrol: string;
+  diesel: string;
+}
