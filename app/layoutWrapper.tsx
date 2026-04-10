@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import AudioPlayer from "@/components/audioPlayer";
 import { deleteAudioFile } from "@/redux/slices/newsSlice";
 import AddNumberPopup from "@/components/auth-components/addNumberPopup";
+import FuelPrice from "@/components/fuelPrice";
 
 const LayoutWrapper = ({ children }: { children: ReactNode }) => {
 
@@ -28,6 +29,7 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
 
         <Navbar />
         <NavbarOptionsBar />
+        <FuelPrice />
 
         <div className="flex flex-col flex-1">
           {children}

@@ -1,4 +1,4 @@
-import { ApiBaseResponse } from "@/types/globalTypes";
+import { ApiBaseResponse, ApiSuccessResponse, FuelDataType } from "@/types/globalTypes";
 import ApiService from "./apiService";
 import { GenerateOtpBodyType } from "@/types/authTypes";
 
@@ -16,6 +16,13 @@ class UtilityService extends ApiService {
     return await this.api.post("/generate-otp", body);
   }
 
+
+  public async getFuelPrice(): Promise<ApiSuccessResponse<FuelDataType[]>> {
+
+    const url = "/fuel-price";
+
+    return await this.api.get(url);
+  }
 
 }
 
