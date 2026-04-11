@@ -42,6 +42,9 @@
 - **AI article summaries** and **audio playback** with a custom audio player
 - **Bookmark management** — save and revisit articles
 - **Cashfree premium checkout** with payment status flow
+- **Live fuel price ticker** — autoscrolling marquee strip showing state-wise petrol & diesel prices
+- **Google signup mobile verification** — non-dismissible modal for new Google users to provide phone number and country
+- **IP-based geolocation** — auto-detects user city and country code via browser GPS + Nominatim reverse geocoding
 - **Dark/Light mode** with `next-themes`
 - Protected route group with session-aware layout wrapper
 - **Vercel Analytics + Speed Insights** for performance monitoring
@@ -89,7 +92,9 @@
 | 🔐 **Secure Auth** | OTP-gated email/password login + Google OAuth2 · JWT cookies with Redis blacklisting on logout |
 | ⚡ **Redis Caching** | Homepage, category, country, and single article responses cached — Guardian API called only on miss |
 | 💎 **Premium Membership** | Unlimited AI features via Cashfree payment gateway |
+| ⛽ **Live Fuel Prices** | Autoscrolling ticker strip showing state-wise petrol & diesel prices, pause-on-hover |
 | 🌍 **Country Feeds** | IP-geolocated country detection for localised news |
+| 📍 **Geolocation** | Browser GPS + Nominatim reverse geocoding for city and country detection |
 | 🛡️ **Rate Limiting** | 300 req/15min global · 30 req/15min on auth routes |
 | 📊 **Analytics** | Vercel Analytics + Speed Insights |
 | ☁️ **CloudFront HTTPS** | EC2 API served securely via AWS CloudFront distribution |
@@ -127,7 +132,7 @@ newsglance-web/
 ├── app/
 │   ├── layout.tsx                   # Root layout — fonts, Redux, Toaster, Analytics
 │   ├── page.tsx                     # Home — routes to Homepage/Category/Country/Search layouts
-│   ├── layoutWrapper.tsx            # Navbar + Footer composition, theme provider
+│   ├── layoutWrapper.tsx            # Navbar + FuelPrice ticker + Footer + AudioPlayer composition
 │   ├── authWrapper.tsx              # Session verification on mount
 │   ├── not-found.tsx                # Global 404 page
 │   │
@@ -145,26 +150,28 @@ newsglance-web/
 │       └── settings/                # Account settings
 │
 ├── components/
-│   ├── navbar-components/           # Responsive navbar with search modal
+│   ├── navbar-components/           # Responsive navbar, options bar with category + country button
 │   ├── footer-components/           # Site footer
 │   ├── news-components/             # HomepageLayout, CategoryLayout, CountryLayout, SearchLayout
 │   ├── news/                        # Article cards (hero, medium, compact) + single article view
-│   ├── auth-components/             # Login, register, forget-password, OTP forms
+│   ├── auth-components/             # Login, register, forget-password, OTP forms, AddNumberPopup
+│   ├── fuel-ticker/                 # FuelChip, FuelTickerStrip, FuelTickerSkeleton components
+│   ├── fuelPrice.tsx                # Orchestrates fuel price fetching + skeleton + ticker rendering
 │   ├── pricing-components/          # Premium plan UI + Cashfree checkout trigger
 │   ├── profile-components/          # Profile view + avatar upload
 │   ├── settings/                    # Account settings panels
 │   ├── contact-components/          # Contact form
 │   ├── audioPlayer.tsx              # Custom audio player for Polly TTS
-│   ├── advertisement/               # Ad placeholder components
-│   ├── magicui/                     # MagicUI animated components
+│   ├── advertisements/              # Ad placeholder components
+│   ├── magicui/                     # MagicUI animated components (Marquee, Globe)
 │   └── ui/                          # shadcn/ui base components
 │
 ├── hooks/
-│   ├── authHooks.ts                 # React Query hooks — login, register, Google auth, etc.
+│   ├── authHooks.ts                 # React Query hooks — login, register, Google auth, Google update
 │   ├── newsHooks.ts                 # Infinite query hooks — homepage, category, country, search
 │   ├── paymentHooks.ts              # Payment creation + verification hooks
 │   ├── userHooks.ts                 # User profile update hooks
-│   ├── utilityHooks.ts              # OTP generation hook
+│   ├── utilityHooks.ts              # OTP generation hook + useFuelPrice query hook
 │   └── use-mobile.ts                # Viewport size hook
 │
 ├── redux/
@@ -177,14 +184,14 @@ newsglance-web/
 │
 ├── services/
 │   ├── apiService.ts                # Axios instance with base URL + credentials
-│   ├── authService.ts               # Auth API calls (login, register, Google, logout, etc.)
+│   ├── authService.ts               # Auth API calls (login, register, Google, logout, Google update)
 │   ├── newsService.ts               # News API calls (feed, search, bookmark, summary, audio)
 │   ├── paymentService.ts            # Payment API calls
 │   ├── userService.ts               # User profile + avatar API calls
-│   ├── utilityService.ts            # OTP request
-│   └── userLocationService.ts       # IP-based geolocation for country detection
+│   ├── utilityService.ts            # OTP request + fuel price fetching
+│   └── userLocationService.ts       # Browser GPS + Nominatim reverse geocoding for city/country detection
 │
-├── types/                           # TypeScript interfaces — auth, news, payment
+├── types/                           # TypeScript interfaces — auth, news, payment, fuel price
 ├── schema/                          # Yup validation schemas for all forms
 ├── utils/                           # Constants — news categories, country list, helpers
 └── public/                          # Static assets
@@ -229,6 +236,9 @@ Every auth action (register, login, forgot password, delete account) requires a 
 ### Google OAuth2
 Single-click sign-in via `@react-oauth/google`. The ID token is exchanged with the backend, which creates or logs in the user automatically.
 
+#### Google Signup Mobile Verification
+New Google users are prompted with a non-dismissible `<AddNumberPopup />` modal to provide their phone number and default country before they can proceed. Uses `useGoogleUpdate` hook and the `POST /api/auth/google/update` endpoint. The modal persists until the required data is submitted.
+
 ### AI Summarization
 One click on any article triggers a Gemini-generated summary via `GET /api/news/summary/:newsId`. Results are cached server-side in PostgreSQL — repeat fetches are instant. Costs 1 daily credit for free users.
 
@@ -237,6 +247,12 @@ A custom-built `<AudioPlayer />` component plays AWS Polly-generated MP3 audio. 
 
 ### Bookmarks
 Bookmark state is managed with React Query mutations. `useCheckBookmark`, `useSaveBookmark`, and `useDeleteBookmark` hooks keep the UI in sync with the API.
+
+### Live Fuel Price Ticker
+A `<FuelPrice />` component renders an autoscrolling `<Marquee />` strip at the top of every page, showing live petrol and diesel prices per Indian state. Uses the `useFuelPrice` query hook (5-minute stale time). Displays a skeleton loader while loading and hides silently on error.
+
+### Country Detection (Navbar)
+The options bar detects the user’s country via `userLocationService` (browser GPS + Nominatim reverse geocoding fallback to New Delhi). Once resolved, a country button appears in the navbar that links directly to the detected country’s news feed.
 
 ### Premium Checkout
 The pricing page triggers `GET /api/payment/create` to create a Cashfree order, then mounts the Cashfree JS SDK checkout. After redirect, the `/payment-status` page verifies the order with the backend and shows a confetti celebration on success.

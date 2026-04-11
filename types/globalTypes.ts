@@ -88,3 +88,14 @@ export type FuelDataType = {
   petrol: string;
   diesel: string;
 }
+
+
+export type FuelHighlightEntryType = {
+  label: string;
+  state: string;
+  price: string;
+  fuelIcon: React.ElementType;
+  trendIcon: React.ElementType;
+  colorClass: string;
+  beamColor: string;
+};
