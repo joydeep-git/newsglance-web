@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Twitter, Linkedin, Heart } from 'lucide-react';
+import { Twitter, Linkedin, Heart, Github } from 'lucide-react';
 import MaxWidthWrapper from '../maxWidthWrapper';
 import NewsletterInput from './newsletterInput';
 import TitleStarter from '../titleStarter';
@@ -58,17 +58,11 @@ const Footer = () => {
               </div>
 
               <div className="space-y-4">
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href="https://github.com/joydeep-git/newsglance-web#readme" target="_blank" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   About
                 </Link>
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Careers
-                </Link>
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Authors
-                </Link>
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Advertise
+                <Link href="/pricing" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  Pricing
                 </Link>
                 <Link href="/contact" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   Contact
@@ -90,35 +84,25 @@ const Footer = () => {
 
               <div className="gap-x-6">
                 <div className="space-y-4">
-                  <Link href="/business" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=business" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Business
                   </Link>
-                  <Link href="/health" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                    Health
-                  </Link>
-                  <Link href="/fashion" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                    Fashion
-                  </Link>
-                  <Link href="/travel" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=travel" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Travel
                   </Link>
-                  <Link href="/sports" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=sport" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Sports
                   </Link>
-
-                  <Link href="/finance" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=money" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Finance
                   </Link>
-                  <Link href="/politics" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=politics" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Politics
                   </Link>
-                  <Link href="/real-estate" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                    Real Estate
-                  </Link>
-                  <Link href="/entertainment" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=culture" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Entertainment
                   </Link>
-                  <Link href="/tech" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Link href="/?category=technology" className="block text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                     Tech
                   </Link>
                 </div>
@@ -134,13 +118,17 @@ const Footer = () => {
               </div>
 
               <div className="space-y-4">
-                <Link href="https://twitter.com" target="_blank" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href="https://x.com/joy_deep_19" target="_blank" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   <Twitter className="w-5 h-5" />
                   Twitter
                 </Link>
-                <Link href="https://linkedin.com" target="_blank" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href="https://linkedin.com/in/joy-deepdas" target="_blank" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   <Linkedin className="w-5 h-5" />
                   LinkedIn
+                </Link>
+                <Link href="https://github.com/joydeep-git" target="_blank" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                  <Github className="w-5 h-5" />
+                  GitHub
                 </Link>
               </div>
 
