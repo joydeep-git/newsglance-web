@@ -22,7 +22,7 @@ const FuelPage = () => {
       {/* Background dot pattern */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <DotPattern width={24} height={24} cr={0.8} className="opacity-20 text-foreground/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        <div className="absolute inset-0 bg-linear-to-b from-background via-background/80 to-background" />
       </div>
 
       <div className="py-10 space-y-10 relative">
