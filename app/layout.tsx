@@ -40,6 +40,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+
+      {/* for ads */}
+      <head>
+        <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js" async></script>
+      </head>
+
       <body className={`${inter.variable} ${montserrat.variable} antialiased relative`}>
 
         <ReduxProvider>

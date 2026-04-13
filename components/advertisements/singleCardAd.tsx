@@ -11,8 +11,9 @@ const SingleCardAd = () => {
 
   return (
     <AdContainer>
-      <script async={true} data-cfasync={false} src="https://pl27691719.profitablecpmratenetwork.com/c5de0ae8c2fc4ea4f37ad70f672a55bf/invoke.js"></script>
-      <div id="container-c5de0ae8c2fc4ea4f37ad70f672a55bf"></div>
+      <div dangerouslySetInnerHTML={{
+        __html: `<script type="text/javascript">aclib.runBanner({zoneId: '11188954' })</script>`
+      }} />
     </AdContainer>
   )
 

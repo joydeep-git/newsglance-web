@@ -12,15 +12,11 @@ const BannerAd = () => {
 
   return (
     <AdContainer className="h-[90px] max-w-[728px]">
-        <iframe
-          data-aa="2431806"
-          src="//ad.a-ads.com/2431806/?size=auto"
-          style={{
-            width: "100%",
-            height: "100%",
-            border: 0,
-          }}
-        />
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `<script type="text/javascript">aclib.runBanner({zoneId: '11188918'})</script>`
+        }}
+      />
     </AdContainer>
   )
 
