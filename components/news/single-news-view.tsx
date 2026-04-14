@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 import ShareNewsBar from "./shareNewsBar";
 import AiTabs from "./ai-tabs";
 import { Button } from "@/components/ui/button";
-import SingleCardAd from "../advertisements/singleCardAd";
-import BannerAd from "../advertisements/bannerAd";
+// import SingleCardAd from "../advertisements/singleCardAd";
+// import BannerAd from "../advertisements/bannerAd";
 import FinanceSidebar from "../news-components/finance-sidebar";
 import { useInfiniteHomepageNews } from "@/hooks/newsHooks";
 import BookmarkButton from "./bookmark-button";
@@ -164,9 +164,9 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
               </div>
 
 
-              <div className="my-3 w-full overflow-hidden">
+              {/* <div className="my-3 w-full overflow-hidden">
                 <BannerAd />
-              </div>
+              </div> */}
 
 
               {/* Article body */}
@@ -189,9 +189,8 @@ const SingleNewsView = ({ article }: { article: ArticleDetail }) => {
           </div>
         </div>
 
-        {/* ─── Ad section ─── */}
         <div className="gap-4 lg:sticky lg:self-start">
-          <SingleCardAd />
+          {/* <SingleCardAd /> */}
 
           <FinanceSidebar
             articles={otherNews?.pages.flatMap((p) => p.featured) ?? []}

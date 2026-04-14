@@ -43,7 +43,8 @@ export default function RootLayout({
 
       {/* for ads */}
       <head>
-        <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js" async></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5660082734971104"
+          crossOrigin="anonymous"></script>
       </head>
 
       <body className={`${inter.variable} ${montserrat.variable} antialiased relative`}>
