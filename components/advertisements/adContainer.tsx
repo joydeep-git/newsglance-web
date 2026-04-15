@@ -8,7 +8,7 @@ const AdContainer = ({ children, className }: { children: ReactNode; className?:
   return (
     <div className={cn(`my-3 border border-project relative`, className)}>
 
-      <Badge className="bg-project -left-1 rounded-none absolute -top-2 z-50">
+      <Badge className="bg-project -left-1 rounded-none absolute -top-1 z-50">
         Ad
       </Badge>
 

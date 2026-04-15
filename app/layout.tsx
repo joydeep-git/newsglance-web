@@ -43,8 +43,8 @@ export default function RootLayout({
 
       {/* for ads */}
       <head>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7600625640145590"
-          crossOrigin="anonymous"></script>
+        <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+        <script dangerouslySetInnerHTML={{ __html: `window.googletag = window.googletag || {cmd: []};` }} />
       </head>
 
       <body className={`${inter.variable} ${montserrat.variable} antialiased relative`}>
