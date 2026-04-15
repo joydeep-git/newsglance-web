@@ -1,52 +1,34 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useAppSelector } from "@/redux/store";
+import { useEffect, useState } from "react";
 import AdContainer from "./adContainer";
 
-declare global {
-  interface Window {
-    aclib?: {
-      runBanner: (options: { zoneId: string }) => void;
-    };
-  }
-}
-
 const SingleCardAd = () => {
-
-  const { user } = useAppSelector((s) => s.auth);
-  const adRef = useRef<HTMLDivElement>(null);
-  const initialized = useRef(false);
+  const [adId] = useState(`gpt-ad-${Math.random().toString(36).substr(2, 9)}`);
 
   useEffect(() => {
-    if (initialized.current) return;
-
-    const run = () => {
-      if (typeof window.aclib !== "undefined" && adRef.current) {
-        initialized.current = true;
-        window.aclib.runBanner({ zoneId: "11188954" });
+    let googletag = (window as any).googletag || { cmd: [] };
+    googletag.cmd.push(() => {
+      // Define a 300x250 test ad slot from Google's official demo inventory
+      const slot = googletag.defineSlot('/6355419/Travel/Europe/France/Paris', [300, 250], adId);
+      if (slot) {
+        slot.addService(googletag.pubads());
+        googletag.enableServices();
+        googletag.display(adId);
       }
+    });
+
+    return () => {
+      // Cleanup for React strict mode
+      googletag.cmd.push(() => {
+        googletag.destroySlots();
+      });
     };
-
-    if (typeof window.aclib !== "undefined") {
-      run();
-    } else {
-      const interval = setInterval(() => {
-        if (typeof window.aclib !== "undefined") {
-          clearInterval(interval);
-          run();
-        }
-      }, 100);
-
-      return () => clearInterval(interval);
-    }
-  }, []);
-
-  if (user && user?.isPremium) return null;
+  }, [adId]);
 
   return (
-    <AdContainer>
-      <div ref={adRef} />
+    <AdContainer className="overflow-hidden flex justify-center bg-gray-50/50 dark:bg-gray-900/50 min-h-[250px]">
+      <div id={adId} style={{ minWidth: "300px", minHeight: "250px" }} />
     </AdContainer>
   );
 };
