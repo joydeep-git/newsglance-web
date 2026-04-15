@@ -7,9 +7,12 @@ const SingleCardAd = () => {
   const [adId] = useState(`gpt-ad-${Math.random().toString(36).substr(2, 9)}`);
 
   useEffect(() => {
-    let googletag = (window as any).googletag || { cmd: [] };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const googletag = (window as any).googletag || { cmd: [] };
+
     googletag.cmd.push(() => {
-      // Define a 300x250 test ad slot from Google's official demo inventory
+
       const slot = googletag.defineSlot('/6355419/Travel/Europe/France/Paris', [300, 250], adId);
       if (slot) {
         slot.addService(googletag.pubads());
@@ -19,11 +22,11 @@ const SingleCardAd = () => {
     });
 
     return () => {
-      // Cleanup for React strict mode
       googletag.cmd.push(() => {
         googletag.destroySlots();
       });
     };
+
   }, [adId]);
 
   return (

@@ -13,7 +13,8 @@ const BannerAd = () => {
 
   useEffect(() => {
 
-    let googletag = (window as any).googletag || { cmd: [] };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const googletag = (window as any).googletag || { cmd: [] };
 
     googletag.cmd.push(() => {
 
