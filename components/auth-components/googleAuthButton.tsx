@@ -116,10 +116,16 @@ const GoogleAuthButton = () => {
 
 
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full flex mx-auto justify-center">
       <div
         ref={buttonRef}
-        style={{ flex: 1, pointerEvents: isPending ? "none" : "auto", opacity: isPending ? 0.5 : 1 }}
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: isPending ? "none" : "auto",
+          opacity: isPending ? 0.5 : 1,
+        }}
       />
     </div>
   );
