@@ -13,6 +13,7 @@ export interface ReduxUiSliceType {
 export interface ReduxAuthSliceType {
   user: UserDataType | null,
   isAuth: boolean,
+  isLoading: boolean,
 }
 
 

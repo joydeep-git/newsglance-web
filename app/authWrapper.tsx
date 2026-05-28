@@ -12,10 +12,11 @@ const AuthWrapper = ({ children, className }: { children: ReactNode; className: 
   const { user, isAuth } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
-  const { refetch, data } = useVerifyToken();
+
+  const { refetch, data, isFetched, isFetching } = useVerifyToken();
 
 
-  // run first time on website open and page loads, sendint token to backend and getting user data
+  // run on mount
   useEffect(() => {
     if (!user && !isAuth) {
       refetch();
@@ -25,13 +26,15 @@ const AuthWrapper = ({ children, className }: { children: ReactNode; className: 
 
   useEffect(() => {
 
+    if (!isFetched || isFetching) return;
+
     if (data?.data) {
       dispatch(setUser(data.data));
     } else {
       dispatch(setLogout());
     }
 
-  }, [data, dispatch]);
+  }, [data, dispatch, isFetched, isFetching]);
 
 
   return (
