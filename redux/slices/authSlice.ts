@@ -8,6 +8,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: ReduxAuthSliceType = {
   user: null,
   isAuth: false,
+  isLoading: true, // true until the first token verify completes
 }
 
 
@@ -19,11 +20,13 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<UserDataType>) => {
       state.user = action.payload;
       state.isAuth = true;
+      state.isLoading = false;
     },
 
     setLogout: (state) => {
       state.user = null;
       state.isAuth = false;
+      state.isLoading = false;
     },
 
   }
