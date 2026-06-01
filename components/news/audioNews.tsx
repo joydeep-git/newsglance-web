@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { RainbowButton } from "../ui/rainbow-button";
 import { useNewsAudio } from "@/hooks/newsHooks";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { setLoginState } from "@/redux/slices/uiSlice";
@@ -15,6 +14,7 @@ import AiNotAuthState from "./ai-not-auth-state";
 import AiLimitExhaustedState from "./ai-limit-exhausted-state";
 import AiErrorState from "./ai-error-state";
 import AiWaveformLoader from "./ai-waveform-loader";
+import { Button } from "../ui/button";
 
 
 const AudioNews = () => {
@@ -114,7 +114,7 @@ const AudioNews = () => {
         <>
           {/* Generate button */}
           {!audioReady && (
-            <RainbowButton
+            <Button
               variant="outline"
               disabled={isLoading}
               onClick={generateAudio}
@@ -126,7 +126,7 @@ const AudioNews = () => {
                 <Radio className="h-3.5 w-3.5" />
               )}
               {isLoading ? "Generating…" : "Generate Audio"}
-            </RainbowButton>
+            </Button>
           )}
 
           {/* Waveform while loading */}
