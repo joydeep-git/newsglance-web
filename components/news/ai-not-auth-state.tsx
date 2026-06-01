@@ -1,6 +1,6 @@
-import { Lock } from "lucide-react";
-import { RainbowButton } from "@/components/ui/rainbow-button";
+import { Lock, LockOpen } from "lucide-react";
 import { AiNotAuthStateProps } from "@/types/newsTypes";
+import { Button } from "../ui/button";
 
 
 const AiNotAuthState = ({ onLogin, description }: AiNotAuthStateProps) => {
@@ -17,10 +17,10 @@ const AiNotAuthState = ({ onLogin, description }: AiNotAuthStateProps) => {
           <p className="text-xs text-muted-foreground">{description}</p>
         </div>
       </div>
-      <RainbowButton variant="outline" size="sm" onClick={onLogin}>
-        <Lock className="h-3.5 w-3.5" />
-        Login to unlock
-      </RainbowButton>
+
+      <Button className="mt-6" size={"sm"} type="button" variant="destructive" onClick={onLogin}>
+        Login to unlock <LockOpen />
+      </Button>
     </div>
   )
 }

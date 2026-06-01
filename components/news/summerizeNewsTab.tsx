@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RainbowButton } from "../ui/rainbow-button";
 import { useNewssummary } from "@/hooks/newsHooks";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { setLoginState } from "@/redux/slices/uiSlice";
@@ -16,6 +15,7 @@ import AiNotAuthState from "./ai-not-auth-state";
 import AiLimitExhaustedState from "./ai-limit-exhausted-state";
 import AiErrorState from "./ai-error-state";
 import AiSummarySkeleton from "./ai-summary-skeleton";
+import { Button } from "../ui/button";
 
 
 const SummerizeNews = () => {
@@ -92,7 +92,7 @@ const SummerizeNews = () => {
       ) : limitExhausted ? (
         <AiLimitExhaustedState description="Your free AI summaries reset at midnight. Upgrade for unlimited access." />
       ) : (
-        <RainbowButton
+        <Button
           variant="outline"
           onClick={handleGenerate}
           disabled={isLoading}
@@ -111,7 +111,7 @@ const SummerizeNews = () => {
               <ChevronDown className="h-3.5 w-3.5" />
             )
           )}
-        </RainbowButton>
+        </Button>
       )}
 
       {summaryOpen && (
